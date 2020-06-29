@@ -6,6 +6,7 @@
     "jsx": "preserve",
     "importHelpers": true,
     "moduleResolution": "node",
+    "experimentalDecorators": true,
     "esModuleInterop": true,
     "allowSyntheticDefaultImports": true,
     "sourceMap": true,
@@ -15,7 +16,10 @@
     ],
     "paths": {
       "@/*": [
-        "src/*"
+        "docs/*"
+      ],
+      "@@/*": [
+        "packages/*"
       ]
     },
     "lib": [
@@ -26,11 +30,15 @@
     ]
   },
   "include": [
-    "src/**/*.ts",
-    "src/**/*.tsx",
-    "src/**/*.vue",
+    "docs/src/**/*.ts",
+    "docs/src/**/*.tsx",
+    "docs/src/**/*.vue",
+    "packages/**/*.vue",
+    "packages/**/*.ts",
+    "packages/**/*.tsx",
     "tests/**/*.ts",
-    "tests/**/*.tsx"
+    "tests/**/*.tsx",
+    "types/**/*.ts"
   ],
   "exclude": [
     "node_modules"

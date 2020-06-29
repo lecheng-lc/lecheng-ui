@@ -1,0 +1,72 @@
+.esc-dialog-enter-active
+  animation scale-in .3s
+.esc-dialog-leave-active
+  animation scale-out .3s
+
+.esc-fade-right-enter-active
+  animation fadeInRight .2s linear
+.esc-fade-right-leave-active
+  animation fadeOutRight .2s linear
+
+.esc-fade-top-enter-active
+  animation slideInTop .2s linear
+.esc-fade-top-leave-active
+  animation slideOutTop .2s linear
+
+.esc-fade-bottom-enter-active
+  animation fadeInBottom .2s linear
+.esc-fade-bottom-leave-active
+  animation fadeOutBottom .2s linear
+
+.esc-slide-top-enter-active
+  animation slideInTop .2s
+.esc-slide-top-leave-active
+  animation slideOutTop .2s
+
+@keyframes scale-in
+  from
+    opacity 0
+    transform translate3d(-50%, -50%, 0) scale(0.5, 0.5)
+  to
+    opacity 1
+    transform translate3d(-50%, -50%, 0) scale(1, 1)
+@keyframes scale-out
+  from
+    opacity 1
+    transform translate3d(-50%, -50%, 0) scale(1, 1)
+  to
+    opacity 0
+    transform translate3d(-50%, -50%, 0) scale(0.5, 0.5)
+
+@keyframes fadeInRight
+  from
+    transform translate3d(100%, 0, 0)
+  to
+    transform translate3d(0, 0, 0)
+@keyframes fadeOutRight
+  from
+    transform translate3d(0, 0, 0)
+  to
+    transform translate3d(100%, 0, 0)
+
+@keyframes fadeInBottom
+  from
+    transform translate3d(0, 100%, 0)
+  to
+    transform translate3d(0, 0, 0)
+@keyframes fadeOutBottom
+  from
+    transform translate3d(0, 0, 0)
+  to
+    transform translate3d(0, 100%, 0)
+
+@keyframes slideInTop
+  from
+    transform translate3d(0, -100%, 0)
+  to
+    transform translate3d(0, 0, 0)
+@keyframes slideOutTop
+  from
+    transform translate3d(0, 0, 0)
+  to
+    transform translate3d(0, -100%, 0)
