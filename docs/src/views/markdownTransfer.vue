@@ -7,9 +7,9 @@
 </template>
 
 <script lang="ts">
-import { Component, Vue, Watch } from 'vue-property-decorator';
-import Layout from '../components/Layout.vue';
-import { markdown } from '../constant';
+import { Component, Vue, Watch } from 'vue-property-decorator'
+import Layout from '../components/Layout.vue'
+import { markdown } from '../constant'
 
 @Component({
   components: {
