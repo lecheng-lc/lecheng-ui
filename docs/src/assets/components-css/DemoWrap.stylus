@@ -1,0 +1,30 @@
+@import '~@@/style/var.styl'
+.lc-demo
+  &-wrap
+    padding-top 45px
+    font-size 14px
+  // &-content
+    // padding 10px
+    // & .esc-button
+    // margin-right 10px
+  &-pd
+    padding 10px
+.esc-title
+  position fixed
+  top 0
+  width 100%
+  left 0
+  background-color #ffffff
+  display flex
+  justify-content space-between
+  align-items center
+  height 45px
+  padding 0 10px
+  z-index 2
+  /*border-bottom 1px border-color solid*/
+  &__back
+  &__right
+    color link-color
+    cursor pointer
+  &__content
+    font-size 18px

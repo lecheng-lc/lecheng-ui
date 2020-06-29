@@ -1,0 +1,44 @@
+$border
+  content ''
+  position absolute
+  top 0
+  left 0
+  width 200%
+  height 200%
+  -webkit-transform-origin 0 0
+  transform-origin 0 0
+  -webkit-transform scale(0.5, 0.5)
+  transform scale(0.5, 0.5)
+  pointer-events none
+  z-index 1
+  border none
+  border-width 0
+
+$relative
+  position relative
+
+dirMobileAlias = {
+  '': '',
+  t: top,
+  b: bottom,
+  l: left,
+  r: right,
+  tb: top bottom
+}
+
+colorMobile = #cecece
+
+genMobile($dirList, $colorList)
+  for $alias, $name in $dirList
+    for $c in $colorList
+      $val = $alias == '' ? '' : '__' + $alias
+      .esc-border{$val}
+        @extend $relative
+        &:before
+          @extend $border
+          for $n in $name
+            border-{$n == '' ? '' : $n + '-'}width 1px
+          border-style solid
+          border-color $c
+
+genMobile(dirMobileAlias, colorMobile)
