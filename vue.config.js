@@ -7,6 +7,13 @@ module.exports = {
       template: 'docs/public/index.html',
       chunks: ['chunk-vendors', 'chunk-common', 'index'],
     },
+    demo: {
+      entry: 'docs/src/demo/main.ts',
+      outputDir: 'docs/dist/demo/',
+      template: 'docs/public/index.html',
+      filename: 'demo.html',
+      chunks: ['chunk-vendors', 'chunk-common', 'demo']
+    }
   },
   chainWebpack: (config) => {
     config

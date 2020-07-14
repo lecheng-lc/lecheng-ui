@@ -93,8 +93,8 @@ export default class Layout extends Vue {
         height 100%
         margin 0 auto
         padding 0 40px
-        @media (min-width 1440px)
-          width 1440px
+        // @media (min-width 1440px)
+        //   width 1440px
         div
           margin-left 10px
         &-small
@@ -121,9 +121,9 @@ export default class Layout extends Vue {
       overflow-y: scroll
       padding: 25px 0 75px
       z-index 1
-      @media (min-width 1440px)
-        margin-left -720px
-        left 50%
+      // @media (min-width 1440px)
+      //   margin-left -720px
+      //   left 50%
       &--sticky
         position fixed
         top 0
@@ -133,9 +133,9 @@ export default class Layout extends Vue {
       padding-right 360px
       margin 0 auto
       min-height calc(100vh - 60px)
-      @media (min-width 1440px)
-        width 1440px
-        padding-right 400px
+      // @media (min-width 1440px)
+      //   width 1440px
+      //   padding-right 400px
 
       section
         padding: 13px 40px
@@ -153,14 +153,16 @@ export default class Layout extends Vue {
       right 40px
       box-shadow 0 0 2px rgba(0,0,0,.2) //, 0 2px 2px rgba(0,0,0,.1)
       transform translate3d(0, 0, 0)
-      @media (max-height 800px)
-        height 500px
-      @media (max-width 1100px)
-        left 750px
-      @media (min-width 1440px)
-        right: 50%
-        margin-right: -680px
-        width: 360px
+      iframe
+        height: 100%
+      // @media (max-height 800px)
+      //   height 500px
+      // @media (max-width 1100px)
+      //   left 750px
+      // @media (min-width 1440px)
+      //   right: 50%
+      //   margin-right: -680px
+      //   width: 360px
       &--sticky
         position fixed
         top 40px

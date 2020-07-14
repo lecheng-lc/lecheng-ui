@@ -2,7 +2,6 @@
   <div class="home">
     <Layout>
       <div class="home__page-center" slot="center">
-        <p>yanjie</p>
         <p>Vue + ts 实践业务组件库</p>
       </div>
     </Layout>
