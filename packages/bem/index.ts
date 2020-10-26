@@ -21,11 +21,9 @@ function join(
   autoAddParent = true,
 ): Mods {
   const ret: Set<Mod> = new Set();
-
   if (autoAddParent) {
     ret.add(prefix());
   }
-
   if (typeof cls === 'string') {
     ret.add(prefix(cls));
   } else if (Array.isArray(cls)) {

@@ -2,6 +2,7 @@
   <div class="demo-home">
     <p class="demo-home-title">
        Vue + ts 实践业务组件库
+       动画交互UI库
     </p>
     <div
       class="demo-home-list"
