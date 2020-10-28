@@ -14,7 +14,7 @@ import Layout from '../components/Layout.vue';
 
 @Component({
   components: {
-    Layout,
+    Layout
   },
 })
 export default class Home extends Vue {}

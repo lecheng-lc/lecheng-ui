@@ -51,6 +51,7 @@ export default class Layout extends Vue {
   }
 
   render() {
+    console.log(this.demoSrc)
     return (
       <div class={bem()}>
         <div class={bem('top', false)}>
