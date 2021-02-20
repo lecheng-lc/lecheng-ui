@@ -1,4 +1,4 @@
-const dir = 'docs-fuben'
+const dir = 'docs'
 module.exports = {
   lintOnSave: false,
   pages: {
@@ -19,7 +19,7 @@ module.exports = {
   chainWebpack: (config) => {
     config
       .resolve.alias
-      .set('@', `${__dirname}/${dir}/src`)
+      .set('@', `${__dirname}/${dir}`)
       .set('@@', `${__dirname}/packages`)
       .end()
       .extensions
@@ -30,6 +30,9 @@ module.exports = {
 
     config.module.rule('md')
       .test(/\.md/)
+      .use('vue-loader')
+      .loader('vue-loader')
+      .end()
       .use('vue-markdown-loader')
       .loader('vue-markdown-loader/lib/markdown-compiler')
       .options({

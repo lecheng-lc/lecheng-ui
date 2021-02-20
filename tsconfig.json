@@ -16,7 +16,7 @@
     ],
     "paths": {
       "@/*": [
-        "docs-fuben/*"
+        "docs/*"
       ],
       "@@/*": [
         "packages/*"
@@ -41,6 +41,8 @@
     "types/**/*.ts"
   ],
   "exclude": [
-    "node_modules"
+    "node_modules",
+    "docs copy",
+    "docs-origin"
   ]
 }
