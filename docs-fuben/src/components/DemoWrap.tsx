@@ -1,4 +1,5 @@
 import { defineComponent } from 'vue'
+import '@/assets/component-css/DemoWrap.stylus'
 export default defineComponent({
   name: 'DemoWrapper',
   props: {
@@ -12,7 +13,7 @@ export default defineComponent({
     const edit = () => {
       window.open(`https://github.com/Jmingzi/esc-ui/tree/master/packages/${props.name || 'button'}/demo/index.vue`);
     }
-    return (
+    return () => (
       <div class="esc-demo-wrap">
         <div class="esc-title">
           <div class="esc-title__back" onClick={() => back}>
@@ -27,7 +28,7 @@ export default defineComponent({
         <div class="esc-title__right" onClick={() => edit()}>
           编辑
         </div>
-        <div  class={['esc-demo-content' ,!props.noPadding ? 'esc-demo-pd': '']}>
+        <div class={['esc-demo-content', !props.noPadding ? 'esc-demo-pd' : '']}>
           <slot />
         </div>
       </div>

@@ -1,14 +1,14 @@
 import { defineComponent, reactive, ref, computed, watch, onMounted, getCurrentInstance, ComponentInternalInstance } from 'vue'
 import { use } from '@@/utils'
-import NavItems from './NavItems.vue'
+import NavItems from './NavItems'
 import { PackageItemGroup, PackageItem, routerDir } from '../constant'
 const [bem] = use('layout')
-
+// import '../docs-fuben/src/assets/components-css/Layout.stylus'
 export default defineComponent({
   components: {
     'nav-items': NavItems
   },
-  setup(props, {slots}) {
+  setup(props, { slots }) {
     const navItems = reactive<PackageItemGroup[]>(routerDir)
     const demoSrc = ref<string>('')
     const docScrollTop = ref<number>(0)
@@ -33,31 +33,31 @@ export default defineComponent({
       }
       changeIframe(proxy?.$route.path!.substr(1));
     })
-    return (
+    return () => (
       <div class={bem()}>
-      <div class={bem('top', false)}>
-        <div class={bem('top', 'content', false)}>
-          <a class={bem('top', 'title', false)} href="">
-            <div>
-              <span class={bem('top', 'content-small', false)}> 业务组件库</span>
-            </div>
-          </a>
-        </div>
-      </div>
-      <div class={(isScrollOut.value ? bem('left', 'sticky') : bem('left', false))}>
-        <nav-items list={navItems} onChange={navChange} />
-      </div>
-      <div class={bem('center', false)}>
-        <div class="van-doc-content">{slots.center}</div>
-      </div>
-      {
-        demoSrc.value ? (
-          <div class={(isScrollOut.value ? bem('right', 'sticky') : bem('right', false))}>
-            <iframe v-slot="right" src={demoSrc.value}/>
+        <div class={bem('top', false)}>
+          <div class={bem('top', 'content', false)}>
+            <a class={bem('top', 'title', false)} href="">
+              <div>
+                <span class={bem('top', 'content-small', false)}> 业务组件库</span>
+              </div>
+            </a>
           </div>
-        ) : null
-      }
-    </div>
+        </div>
+        <div class={(isScrollOut.value ? bem('left', 'sticky') : bem('left', false))}>
+          <nav-items list={navItems} onChange={navChange} />
+        </div>
+        <div class={bem('center', false)}>
+          <div class="van-doc-content">{slots.center}</div>
+        </div>
+        {
+          demoSrc.value ? (
+            <div class={(isScrollOut.value ? bem('right', 'sticky') : bem('right', false))}>
+              <iframe v-slot="right" src={demoSrc.value} />
+            </div>
+          ) : null
+        }
+      </div>
     )
   }
 })

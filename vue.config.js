@@ -1,16 +1,17 @@
+const dir = 'docs-fuben'
 module.exports = {
   lintOnSave: false,
   pages: {
     index: {
-      entry: 'docs/src/main.ts',
-      outputDir: 'docs/dist/',
-      template: 'docs/public/index.html',
+      entry: `${dir}/src/main.ts`,
+      outputDir: `${dir}/dist/`,
+      template: `${dir}/public/index.html`,
       chunks: ['chunk-vendors', 'chunk-common', 'index'],
     },
     demo: {
-      entry: 'docs/src/demo/main.ts',
-      outputDir: 'docs/dist/demo/',
-      template: 'docs/public/index.html',
+      entry: `${dir}/src/demo/main.ts`,
+      outputDir: `${dir}/dist/demo/`,
+      template: `${dir}/public/index.html`,
       filename: 'demo.html',
       chunks: ['chunk-vendors', 'chunk-common', 'demo']
     }
@@ -18,7 +19,7 @@ module.exports = {
   chainWebpack: (config) => {
     config
       .resolve.alias
-      .set('@', `${__dirname}/docs/src`)
+      .set('@', `${__dirname}/${dir}/src`)
       .set('@@', `${__dirname}/packages`)
       .end()
       .extensions
@@ -29,9 +30,6 @@ module.exports = {
 
     config.module.rule('md')
       .test(/\.md/)
-      .use('vue-loader')
-      .loader('vue-loader')
-      .end()
       .use('vue-markdown-loader')
       .loader('vue-markdown-loader/lib/markdown-compiler')
       .options({

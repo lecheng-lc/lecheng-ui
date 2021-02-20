@@ -16,7 +16,7 @@
     ],
     "paths": {
       "@/*": [
-        "docs/*"
+        "docs-fuben/*"
       ],
       "@@/*": [
         "packages/*"

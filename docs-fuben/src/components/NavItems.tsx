@@ -1,7 +1,7 @@
 import { defineComponent,PropType, getCurrentInstance, ComponentInternalInstance } from 'vue'
 import { use } from '@@/utils'
 import { PackageItemGroup, PackageItem } from '../constant'
-
+// import '@/assets/component-css/NavItems.stylus'
 export default defineComponent({
   props: {
     list: {

@@ -1,13 +1,13 @@
 import { defineComponent } from 'vue'
-import Layout from '../components/Layout.vue'
+import Layout from '../../components/Layout'
 import './home.scss'
 export default defineComponent({
-  name:'Home',
-  components:{
+  name: 'Home',
+  components: {
     Layout
   },
-  setup(){
-    return (
+  setup() {
+    return () => (
       <div class="home">
         <Layout slot="center">
           <div class="home_page-content">

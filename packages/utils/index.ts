@@ -1,4 +1,4 @@
-import { VNode, Component } from 'vue/types';
+import { VNode, Component } from 'vue'
 import bem from '../bem';
 /* deprecate */
 export function use(name: string, app?: string) {

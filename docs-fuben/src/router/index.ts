@@ -1,5 +1,5 @@
 import { createRouter, createWebHistory, RouteRecordRaw } from 'vue-router'
-import Home from '../views/Home/index.vue'
+import Home from '../views/Home'
 
 const routes: Array<RouteRecordRaw> = [
   {
@@ -7,11 +7,11 @@ const routes: Array<RouteRecordRaw> = [
     name: 'Home',
     component: Home
   },
-  {
-    path: '/:name',
-    name: 'mark-docs',
-    component: () => import('@/views/MarkdownTransfer/Index'),
-  },
+  // {
+  //   path: '/:name',
+  //   name: 'mark-docs',
+  //   component: () => import('@/views/MarkdownTransfer/Index'),
+  // },
 ]
 
 const router = createRouter({
