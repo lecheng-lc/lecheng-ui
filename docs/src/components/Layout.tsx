@@ -12,7 +12,6 @@ export default defineComponent({
     msg: String
   },
   setup(props, { slots,attrs }) {
-    console.log(props)
     const navItems = reactive<PackageItemGroup[]>(routerDir)
     const demoSrc = ref<string>('')
     const docScrollTop = ref<number>(0)
@@ -36,7 +35,7 @@ export default defineComponent({
       window.onscroll = () => {
         docScrollTop.value = document.documentElement.scrollTop;
       }
-      // changeIframe((proxy?.$route.path as String).substr(1));
+      changeIframe((proxy?.$route.path as String).substr(1));
     })
     return () => (
       <div class={bem()}>
@@ -53,13 +52,12 @@ export default defineComponent({
           <nav-items list={navItems} onChange={navChange} />
         </div>
         <div class={bem('center', false)}>
-          {props}啊啊所大
-          <div class="van-doc-content">{slots.center}</div>
+          <div class="van-doc-content">{(slots as any).center()}</div>
         </div>
         {
           demoSrc.value ? (
             <div class={(isScrollOut.value ? bem('right', 'sticky') : bem('right', false))}>
-              <iframe v-slot="right" src={demoSrc.value} />
+              <iframe  src={demoSrc.value} />
             </div>
           ) : null
         }
