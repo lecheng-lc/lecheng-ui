@@ -4,6 +4,7 @@ import NavItems from './NavItems'
 import { PackageItemGroup, PackageItem, routerDir } from '../constant'
 const [bem] = use('layout')
 import '../assets/components-css/Layout.stylus'
+import {useRoute} from 'vue-router'
 export default defineComponent({
   components: {
     'nav-items': NavItems
@@ -11,10 +12,11 @@ export default defineComponent({
   props:{
     msg: String
   },
-  setup(props, { slots,attrs }) {
+  setup(props, { slots }) {
     const navItems = reactive<PackageItemGroup[]>(routerDir)
     const demoSrc = ref<string>('')
     const docScrollTop = ref<number>(0)
+    const route = useRoute()
     const { proxy } = getCurrentInstance() as ComponentInternalInstance
     const isScrollOut = computed(() => {
       return docScrollTop.value > 40
@@ -22,14 +24,13 @@ export default defineComponent({
     const changeIframe = (pathName: string) => {
       demoSrc.value = routerDir.some((obj) => obj.items.some((x) => pathName === x.name && x.noDemo === true))
         ? ''
-        : `./demo.html#/${pathName}`;
+        : `./demo.html#/${pathName}`
     }
     const navChange = (nav: PackageItem) => {
       changeIframe(nav.name)
     }
-    watch(() => '$route.path', (val: string) => {
-      console.log('watch进去了么')
-      // changeIframe(val.substring(1))
+    watch(() => route.path, (val: string) => {
+      changeIframe(val.substring(1))
     })
     onMounted(() => {
       window.onscroll = () => {
@@ -57,7 +58,7 @@ export default defineComponent({
         {
           demoSrc.value ? (
             <div class={(isScrollOut.value ? bem('right', 'sticky') : bem('right', false))}>
-              <iframe  src={demoSrc.value} />
+              <iframe frameborder="0" src={demoSrc.value} />
             </div>
           ) : null
         }

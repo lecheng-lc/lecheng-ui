@@ -20,7 +20,6 @@ export const routerDir: PackageItemGroup[] = [
         title: 'Bem 样式函数',
         noDemo: true,
         name: 'bem',
-
       },
     ],
   },
