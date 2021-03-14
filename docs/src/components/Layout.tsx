@@ -13,6 +13,7 @@ export default defineComponent({
     msg: String
   },
   setup(props, { slots }) {
+    console.log(slots)
     const navItems = reactive<PackageItemGroup[]>(routerDir)
     const demoSrc = ref<string>('')
     const docScrollTop = ref<number>(0)

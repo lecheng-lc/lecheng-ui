@@ -1,3 +1,5 @@
+// slots 首先$slots 不是响应式的数据，computed中不会因为插槽变更而变更。
+// 参考回答，所以动态组件没有办法解决
 import { defineComponent, ref, getCurrentInstance, ComponentInternalInstance, onMounted, watch, reactive } from 'vue'
 import Layout from '../../components/Layout'
 import { markdown } from '../../constant'

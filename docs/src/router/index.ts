@@ -10,7 +10,7 @@ const routes: Array<RouteRecordRaw> = [
   {
     path: '/:name',
     name: 'mark-docs',
-    component: () => import('@/src/views/MarkdownTransfer/index')
+    component: () => import('@/src/views/MarkdownTransfer/index.vue')
   },
 ]
 
