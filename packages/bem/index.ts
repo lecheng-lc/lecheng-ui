@@ -4,9 +4,9 @@ type PrefixFn = {
   (key?: string): string;
 }
 
-// const APP_PREFIX = 'esc-'
-const MODULE = '__';
-const MODIFIER = '--';
+// const APP_PREFIX = 'lc-'
+const MODULE = '__'; // 模块下划线
+const MODIFIER = '--'; // 元素下划线
 
 function addSymbol(name: string, app?: string) {
   const isModule = new RegExp(MODULE).test(name);
@@ -14,7 +14,7 @@ function addSymbol(name: string, app?: string) {
     ? (app ? `${app}-` : '') + name + (subName ? MODULE + subName : '')
     : name + (subName ? MODIFIER + subName : ''));
 }
-
+// 循环递归
 function join(
   prefix: PrefixFn,
   cls: Mods,
@@ -44,21 +44,23 @@ function join(
   return [...ret];
 }
 
+// 这个函数其实运用了闭包的原理
 /**
  * css BEM 规则辅助函数
  * 用法举例：
- * 1. 初始化命名空间 const bem = Bem('button') => esc-button
+ * 1. 初始化命名空间 const bem = Bem('button') => lc-button
  * 2. bem 接受 3 个参数，模块、修饰符、是否自动添加父级 class
  *    1. 模块举例：
- *      - bem() => 'esc-button'
- *      - bem('large') => ['esc-button', 'esc-button__large'] 自动添加了父级 class
- *      - bem('large', false) => ['esc-button__large']
- *      - bem({ large: true, plain: false }) => ['esc-button', 'esc-button__large']
- *      - bem(['primary', { plain: true }])  => ['esc-button', 'esc-button__large', 'esc-button__plain']
+ *      - bem() => 'lc-button'
+ *      - bem('large') => ['lc-button', 'lc-button__large'] 自动添加了父级 class
+ *      - bem('large', false) => ['lc-button__large']
+ *      - bem({ large: true, plain: false }) => ['lc-button', 'lc-button__large']
+ *      - bem(['primary', { plain: true }])  => ['lc-button', 'lc-button__large', 'lc-button__plain']
  *    2. 修饰符举例（模块只能是字符串）：
- *      - bem('primary', 'text') => ['esc-button__primary', 'esc-button__primary--text'] 自动添加了父级 class
- *      - bem('primary', ['text', { loading: true }], false) => ['esc-button__primary--text', { 'esc-button__primary--loading': true }]
+ *      - bem('primary', 'text') => ['lc-button__primary', 'lc-button__primary--text'] 自动添加了父级 class
+ *      - bem('primary', ['text', { loading: true }], false) => ['lc-button__primary--text', { 'lc-button__primary--loading': true }]
  */
+
 const bem = (name: string, app?: string, defaultAuto = false) => (
   module?: Mods,
   modifiers?: Mods | boolean,
@@ -68,7 +70,7 @@ const bem = (name: string, app?: string, defaultAuto = false) => (
     autoAddParent = modifiers;
     modifiers = undefined;
   }
-  const auto = autoAddParent === undefined ? defaultAuto : autoAddParent;
+  const auto = autoAddParent === undefined ? defaultAuto : autoAddParent; // 是否自动添加父级class
   const prefix: PrefixFn = addSymbol(name, app);
   if (!module) {
     return prefix();
@@ -78,5 +80,5 @@ const bem = (name: string, app?: string, defaultAuto = false) => (
   return join(prefix, module, auto);
 };
 
-export const border = bem('border', 'esc');
+export const border = bem('border', 'lc');
 export default bem;

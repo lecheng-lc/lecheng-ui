@@ -1,11 +1,10 @@
-import { defineComponent, ref, reactive } from 'vue'
-import { PackageItemGroup } from '../../constant'
+import { defineComponent, reactive ,Transition} from 'vue'
+import {  routerDir} from '../../constant'
 import './home.stylus'
 export default defineComponent({
   name: 'Home',
   setup() {
     const showIndex = reactive<number[]>([])
-    const routerDir = reactive<PackageItemGroup[]>([])
     const toggleVisible = (index: number): void => {
       const position = showIndex.indexOf(index)
       if (position >= 0) {
@@ -21,15 +20,11 @@ export default defineComponent({
     }
     return () => (
       <div class="demo-home">
-        <p class="demo-home-title">
-          Vue3.0 + ts 实践业务组件库
-          动画交互UI库
-        </p>
         {
           routerDir.map((item, index) => {
             return <div class="demo-home-list">
               <p class="demo-home-list-title" onClick={() => toggleVisible(index)}>{item.title}</p>
-              <transition name="nav">
+              <Transition name="nav">
                 <div class="demo-home-list__item-group" v-show={showIndex.indexOf(index) >= 0}>
                   {
                     item.items.map((itemNav) => {
@@ -37,7 +32,7 @@ export default defineComponent({
                     })
                   }
                 </div>
-              </transition>
+              </Transition>
             </div>
           })
         }

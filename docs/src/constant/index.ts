@@ -24,7 +24,7 @@ export const routerDir: PackageItemGroup[] = [
     ],
   },
   {
-    title: '测试页面',
+    title: '功能类',
     items: [
       {
         title: '测试一',
@@ -32,8 +32,28 @@ export const routerDir: PackageItemGroup[] = [
         name: 'test',
       },
     ],
+  },
+  {
+    title: '展示类',
+    items: [
+      {
+        title: '测试一',
+        noDemo: false,
+        name: '',
+      },
+    ],
+  },
+  {
+    title: '组件库',
+    items: [
+      {
+        title: '测试一',
+        noDemo: false,
+        name: '',
+      },
+    ],
   }
-];
+]
 
 export const markdown = {
   Bem,

@@ -4,16 +4,15 @@ import NavItems from './NavItems'
 import { PackageItemGroup, PackageItem, routerDir } from '../constant'
 const [bem] = use('layout')
 import '../assets/components-css/Layout.stylus'
-import {useRoute} from 'vue-router'
+import { useRoute } from 'vue-router'
 export default defineComponent({
   components: {
     'nav-items': NavItems
   },
-  props:{
+  props: {
     msg: String
   },
   setup(props, { slots }) {
-    console.log(slots)
     const navItems = reactive<PackageItemGroup[]>(routerDir)
     const demoSrc = ref<string>('')
     const docScrollTop = ref<number>(0)
@@ -43,26 +42,28 @@ export default defineComponent({
       <div class={bem()}>
         <div class={bem('top', false)}>
           <div class={bem('top', 'content', false)}>
-            <a class={bem('top', 'title', false)} href="">
+            <a class={bem('top', 'title', false)} href="/">
               <div>
-                <span class={bem('top', 'content-small', false)}> 业务组件库</span>
+                <span class={bem('top', 'content-small', false)}>效果笔记</span>
               </div>
             </a>
           </div>
         </div>
-        <div class={(isScrollOut.value ? bem('left', 'sticky') : bem('left', false))}>
-          <nav-items list={navItems} onChange={navChange} />
+        <div class={bem('content', false)}>
+          <div class={(isScrollOut.value ? bem('left', 'sticky') : bem('content','left', false))}>
+            <nav-items list={navItems} onChange={navChange} />
+          </div>
+          <div class={bem('content','center', false)}>
+            <div class="van-doc-content">{(slots as any).center()}</div>
+          </div>
+          {
+            demoSrc.value ? (
+              <div class={(isScrollOut.value ? bem('right', 'sticky') : bem('content','right', false))}>
+                <iframe frameborder="0" src={demoSrc.value} />
+              </div>
+            ) : null
+          }
         </div>
-        <div class={bem('center', false)}>
-          <div class="van-doc-content">{(slots as any).center()}</div>
-        </div>
-        {
-          demoSrc.value ? (
-            <div class={(isScrollOut.value ? bem('right', 'sticky') : bem('right', false))}>
-              <iframe frameborder="0" src={demoSrc.value} />
-            </div>
-          ) : null
-        }
       </div>
     )
   }

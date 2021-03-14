@@ -3,7 +3,7 @@ import bem from '../bem';
 /* deprecate */
 export function use(name: string, app?: string) {
   return [
-    bem(name, app || 'esc', true),
+    bem(name, app || 'lc', true),
   ];
 }
 

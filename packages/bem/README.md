@@ -5,7 +5,7 @@ css BEM 命名规则生成函数，目的是优化在 `template` 或 `jsx` 中 B
 引入
 
 ```js
-import { Bem } from 'esc-ui'
+import { Bem } from 'lc-ui'
 
 const bem = Bem(moduleName: string, app?: string)
 ```
@@ -15,7 +15,7 @@ const bem = Bem(moduleName: string, app?: string)
 ```jsx
 class Cart {
   render() {
-    const bem = useBem('cart', 'esc')
+    const bem = useBem('cart', 'lc')
     return (
       <div class={bem()}>
         <div class={bem('goods')}>
@@ -28,7 +28,7 @@ class Cart {
 ```
 
 Bem函数思路
-- 项目存在可选的全局唯一的命名空间，例如 `esc`
+- 项目存在可选的全局唯一的命名空间，例如 `lc`
 - 遵循BEM命名规范
 - vue 支持解析 `:class` 的所有值
 

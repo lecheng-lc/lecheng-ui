@@ -28,6 +28,6 @@
   animation nav-slide 0.2s linear reverse
 @keyframes nav-slide
   from
-    transform translateY(-100%)
+    transform translateY(-200%)
   to
     transform translateY(0)
