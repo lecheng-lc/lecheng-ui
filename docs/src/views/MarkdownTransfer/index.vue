@@ -21,7 +21,6 @@ import {
 } from 'vue'
 import { useRoute } from 'vue-router'
 type MarkdownType = keyof typeof markdown
-
 export default defineComponent({
   components: {
     Layout,
@@ -35,7 +34,6 @@ export default defineComponent({
     ) => {
       current.value = (name[0].toUpperCase() +
         name.substring(1)) as MarkdownType
-      console.log(current.value)
     }
     const route = useRoute()
     watch(

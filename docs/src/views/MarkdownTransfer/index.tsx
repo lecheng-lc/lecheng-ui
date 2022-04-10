@@ -9,10 +9,8 @@ type MarkdownType = keyof typeof markdown
 export default defineComponent({
   name: 'MarkdonwTransfer',
   setup() {
+    console.log(222)
     const current = ref<MarkdownType>('Bem')
-    // const slots = reactive({
-    //   center: () => dynaComponent()
-    // })
     const route = useRoute()
     let { proxy } = getCurrentInstance() as ComponentInternalInstance
     const pathChange = (name: string = (proxy?.$route.path as string).substring(1)) => {
@@ -23,6 +21,7 @@ export default defineComponent({
       pathChange(val.substring(1))
     })
     const dynaComponent = ()=>{
+      console.log(markdown[current.value],'===')
       if(!current.value) return
       return markdown[current.value].render()
     }

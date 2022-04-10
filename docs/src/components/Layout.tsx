@@ -59,7 +59,7 @@ export default defineComponent({
           {
             demoSrc.value ? (
               <div class={(isScrollOut.value ? bem('right', 'sticky') : bem('content','right', false))}>
-                <iframe frameborder="0" src={demoSrc.value} />
+                <iframe frameborder="0"  src={demoSrc.value} />
               </div>
             ) : null
           }

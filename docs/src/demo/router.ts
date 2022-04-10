@@ -6,13 +6,14 @@ const routes: RouteRecordRaw[] = []
 const composeRoute = (name: string): RouteRecordRaw => ({
 	path: `/${name}`,
 	name: `/${name}`,
-	component: () => import(`@@/${name}/demo/Index.vue`)
+	component: () => import(`@@/${name}/demo/Index`)
 })
 routerDir.forEach(x => {
   x.items.forEach(item => {
 	  routes.push(composeRoute(item.name))
   })
 })
+console.log(routes,'====')
 const router = createRouter({
   history: createWebHashHistory(process.env.BASE_URL),
   routes: [

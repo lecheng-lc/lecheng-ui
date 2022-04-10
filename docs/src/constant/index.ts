@@ -1,6 +1,6 @@
 import Bem from '@@/bem/README.md';
 import Test from '@@/test/README.md';
-
+import SlideBlock from '@@/slide-block/README.md';
 export interface PackageItem {
   title: string;
   name: string;
@@ -24,38 +24,19 @@ export const routerDir: PackageItemGroup[] = [
     ],
   },
   {
-    title: '功能类',
+    title: '滑动删除',
     items: [
       {
-        title: '测试一',
+        title: '左滑删除',
         noDemo: false,
-        name: 'test',
+        name: 'slide-block',
       },
-    ],
-  },
-  {
-    title: '展示类',
-    items: [
-      {
-        title: '测试一',
-        noDemo: false,
-        name: '',
-      },
-    ],
-  },
-  {
-    title: '组件库',
-    items: [
-      {
-        title: '测试一',
-        noDemo: false,
-        name: '',
-      },
-    ],
+    ]
   }
 ]
 
 export const markdown = {
   Bem,
-  Test
+  Test,
+  SlideBlock
 };
