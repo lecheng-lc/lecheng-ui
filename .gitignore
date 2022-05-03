@@ -23,5 +23,5 @@ output.js
 *.njsproj
 *.sln
 *.sw?
-yarn.lock
+yarn.lock/**
 package-lock.json
