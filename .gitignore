@@ -1,6 +1,8 @@
 .DS_Store
 node_modules
 /dist
+yarn.lock
+package-lock.json
 
 # local env files
 .env.local
@@ -23,5 +25,3 @@ output.js
 *.njsproj
 *.sln
 *.sw?
-yarn.lock
-package-lock.json
