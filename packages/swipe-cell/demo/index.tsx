@@ -1,7 +1,7 @@
 import { defineComponent, ref, getCurrentInstance,ComponentInternalInstance } from 'vue'
 import { use } from '@@/utils'
 const [bem] = use('slide')
-import './Index.scss'
+import './index.scss'
 export default defineComponent({
   setup(props) {
     const startX = ref(0)
@@ -10,18 +10,21 @@ export default defineComponent({
     const disX = ref(0)
     const deleteSlider = ref('')
     const { proxy } = getCurrentInstance() as ComponentInternalInstance
-    const mouseStart = (ev:MouseEvent)=>{
-      ev = ev 
-      ev.preventDefault()
-      startX.value = ev.clientX
-    }
-    const mouseMove = (ev: MouseEvent) =>{
+    const touchStart = (ev:any)=>{
+      console.log(ev)
       ev = ev
       ev.preventDefault()
+      startX.value = ev.touches[0].clientX
+    }
+    const touchMove = (ev: any) =>{
+      ev = ev
+      ev.preventDefault()
+      console.log(ev)
+      console.log(1234, startX.value)
       // 获取删除按钮的宽度，此宽度为滑块左滑的最大距离
       let wd = (proxy?.$refs.remove as any).offsetWidth
         // 滑动时距离浏览器左侧实时距离
-        moveX.value = ev.clientX
+        moveX.value = ev.touches[0].clientX
         // 起始位置减去 实时的滑动的距离，得到手指实时偏移距离
         disX.value = startX.value - moveX.value
         // 如果是向右滑动或者不滑动，不改变滑块的位置
@@ -37,10 +40,10 @@ export default defineComponent({
           }
         }
     }
-    const mouseEnd = (ev: MouseEvent) => {
+    const touchEnd = (ev: any) => {
       ev = ev
       let wd = (proxy?.$refs.remove as any).offsetWidth
-        let endX = ev.clientX
+        let endX = ev.touches[0].clientX
         disX.value = startX.value - endX
         //如果距离小于删除按钮一半,强行回到起点
         if (disX.value * 5 < wd / 2) {
@@ -53,7 +56,7 @@ export default defineComponent({
     return () => (
       <div class={bem('wrapper')}>
         <div class={bem('content', false)}>
-          <div class={bem('content', 'slide',false)} onMousemove={(event)=>mouseMove(event)} onMousedown={(event)=>mouseStart(event)} onMouseleave={(event)=>mouseEnd(event)} style={deleteSlider.value}>
+          <div class={bem('content', 'slide',false)} onTouchmove={(event)=>touchMove(event)} onTouchstart={(event)=>touchStart(event)} onTouchend={(event)=>touchEnd(event)} style={deleteSlider.value}>
           </div>
           <div class={bem('remove', false)} ref='remove'>
             删除

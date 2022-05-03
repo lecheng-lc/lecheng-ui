@@ -6,7 +6,7 @@ const routes: RouteRecordRaw[] = []
 const composeRoute = (name: string): RouteRecordRaw => ({
 	path: `/${name}`,
 	name: `/${name}`,
-	component: () => import(`@@/${name}/demo/Index`)
+	component: () => import(`@@/${name}/demo/index`)
 })
 routerDir.forEach(x => {
   x.items.forEach(item => {

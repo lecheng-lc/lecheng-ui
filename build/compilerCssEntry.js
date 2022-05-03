@@ -17,7 +17,6 @@ function getComponentNameFromPath(file) {
   last = file.lastIndexOf('/')
   return file.substr(last + 1)
 }
-
 function getDependence(component) {
   const result = [component]
   const components = require('./get-component')('style')
@@ -29,7 +28,7 @@ function getDependence(component) {
     filename,
     filter: path => !~path.indexOf('node_modules')
   })
-
+  // console.log(dependence)
   const search = (obj) => {
     Object.keys(obj).forEach(file => {
       const name = getComponentNameFromPath(file)

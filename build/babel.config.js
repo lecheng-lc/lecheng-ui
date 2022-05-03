@@ -20,6 +20,8 @@ module.exports = {
   ],
   plugins: [
     '@babel/plugin-proposal-optional-chaining',
+    ["@babel/plugin-proposal-private-methods", { "loose": true }],
+    ["@babel/plugin-proposal-private-property-in-object", { "loose": true }],
     [
       '@babel/plugin-transform-runtime',
       {
@@ -27,14 +29,6 @@ module.exports = {
         helpers: true,
         regenerator: true,
         useESModules: false
-      }
-    ],
-    // '@babel/plugin-transform-object-assign',
-    [
-      '@babel/plugin-proposal-decorators',
-      {
-        legacy: true,
-        // decoratorsBeforeExport: true
       }
     ],
     [

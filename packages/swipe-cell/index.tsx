@@ -1,11 +1,19 @@
-> Javascript代码
-
-```js
-import { defineComponent, ref, getCurrentInstance,ComponentInternalInstance } from 'vue'
+import { defineComponent, ref, getCurrentInstance,ComponentInternalInstance,type PropType } from 'vue'
 import { use } from '@@/utils'
 const [bem] = use('slide')
-import './Index.scss'
+import './index.scss'
+export type Interceptor = (
+  ...args: any[]
+) => Promise<boolean> | boolean | undefined | void;
+const swipeCellProps = {
+  disabled: Boolean,
+  rightWidth: [Number, String],
+  beforeClose: Function as PropType<Interceptor>,
+  stopPropagation: Boolean,
+}
+
 export default defineComponent({
+  props: swipeCellProps,
   setup(props) {
     const startX = ref(0)
     const endX = ref(0)
@@ -14,12 +22,13 @@ export default defineComponent({
     const deleteSlider = ref('')
     const { proxy } = getCurrentInstance() as ComponentInternalInstance
     const mouseStart = (ev:MouseEvent)=>{
-      ev = ev || event
+      ev = ev
       ev.preventDefault()
       startX.value = ev.clientX
     }
-    const mouseMove = (ev: MouseEvent) =>{
-      ev = ev || event
+    const mouseMove = (ev:any) =>{
+      console.log(ev)
+      ev = ev
       ev.preventDefault()
       // 获取删除按钮的宽度，此宽度为滑块左滑的最大距离
       let wd = (proxy?.$refs.remove as any).offsetWidth
@@ -41,7 +50,7 @@ export default defineComponent({
         }
     }
     const mouseEnd = (ev: MouseEvent) => {
-      ev = ev || event
+      ev = ev
       let wd = (proxy?.$refs.remove as any).offsetWidth
         let endX = ev.clientX
         disX.value = startX.value - endX
@@ -56,50 +65,13 @@ export default defineComponent({
     return () => (
       <div class={bem('wrapper')}>
         <div class={bem('content', false)}>
-          <div class={bem('content', 'slide',false)} onMousemove={(event)=>mouseMove(event)} onMousedown={(event)=>mouseStart(event)} onMouseleave={(event)=>mouseEnd(event)} style={deleteSlider.value}>
+          <div class={bem('content', 'slide',false)} onTouchmove={(event)=>mouseMove(event)} onMousedown={(event)=>mouseStart(event)} onMouseleave={(event)=>mouseEnd(event)} style={deleteSlider.value}>
           </div>
           <div class={bem('remove', false)} ref='remove'>
-            删除
+            {/* 删除 */}
           </div>
         </div>
       </div>
     )
   }
 })
-```
-> CSS样式
-```css
-.lc-slide {
-  &__content{
-    width: 100%;
-    height: 60px;
-    position: relative;
-    user-select: none;
-    &--slide{
-      position: absolute;
-      left: 0;
-      right: 0;
-      top: 0;
-      bottom: 0;
-      background: green;
-      z-index: 100;
-      transition: 0.3s;
-    }
-  }
-  &__remove{
-    position: absolute;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    width: 100px;
-    height: 60px;
-    background: red;
-    right: 0;
-    top: 0;
-    color: #fff;
-    text-align: center;
-    font-size: 20px;
-    line-height: 200px;
-  }
-}
-```

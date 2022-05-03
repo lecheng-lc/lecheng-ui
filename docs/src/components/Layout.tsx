@@ -44,7 +44,7 @@ export default defineComponent({
           <div class={bem('top', 'content', false)}>
             <a class={bem('top', 'title', false)} href="/">
               <div>
-                <span class={bem('top', 'content-small', false)}>效果笔记</span>
+                <span class={bem('top', 'content-small', false)}>MARK</span>
               </div>
             </a>
           </div>
