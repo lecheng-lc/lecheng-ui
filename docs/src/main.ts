@@ -2,7 +2,8 @@ import { createApp } from 'vue'
 import App from './App'
 import router from './router/index'
 import store from './store'
-import 'highlight.js/styles/github.css';
+import 'highlight.js/styles/github.css'
+import '../../packages/style/base.styl'
 import  '@vant/touch-emulator'
 // 其他元素使用 github 的样式
 import 'github-markdown-css'

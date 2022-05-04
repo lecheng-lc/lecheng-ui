@@ -1,6 +1,7 @@
 .lc-layout
     &__top
       height 60px
+      background #fff
       border-bottom 1px #eee solid
       &--content
         display flex
@@ -29,44 +30,54 @@
     &__content
       display flex
       &--left
-        flex: 15% 0 0;
-        width 240px
-        border-right: 1px solid #f1f4f8
-        overflow-y: scroll
-        padding: 25px 0 75px
-        z-index 1
-        // @media (min-width 1440px)
-        //   margin-left -720px
-        //   left 50%
         &--sticky
           position fixed
           top 0
-
+          width 220px
+          border-right: 1px solid #f1f4f8
+          overflow-y: scroll
+          padding: 25px 0 75px
+          background #ffffff
+          z-index 1
+          min-height calc(100vh - 60px)
+          @media (min-width 1680px)
+            margin-left -840px
+            left 50%
       &--center
-        flex: 55% 0 0
-        margin 0 auto
+        padding-left:220px;
+        padding-right 390px
         min-height calc(100vh - 60px)
         section
           padding: 13px 40px
           overflow: hidden
+      @media (min-width 1680px)
+        &--center
+          width 1680px
+          margin 0 auto
       &--right
-        flex: 20% 0 0
-        z-index: 1
-        margin-right 100px
+        right: 50%;
+        margin-right: -860px;
         overflow hidden
         border-radius 6px
-        background: #f7f8f9
-        margin-top 100px
         box-sizing: border-box
         height 640px
         width 320px
-        box-shadow 0 0 2px rgba(0,0,0,.2) //, 0 2px 2px rgba(0,0,0,.1)
         transform translate3d(0, 0, 0)
-        @media (max-height 800px)
-          height 500px
-        @media (min-width 1440px)
-          width: 360px
+        background: #fafafa;
+        border-radius: 12px;
+        box-shadow: #ebedf0 0 4px 12px;
         &--sticky
+          position absolute
+          top 90px
+          height 560px
+          z-index: 1
+        &--fixed
           position fixed
-          top 40px
-          // height 560px
+          top 30px
+          height 560px
+          z-index: 1
+        // @media (max-height 800px)
+        //   height 500px
+        // @media (min-width 1440px)
+        //   width: 360px
+         

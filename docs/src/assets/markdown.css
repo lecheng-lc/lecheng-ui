@@ -1,4 +1,4 @@
-body {
+section {
     color: #333;
     font-size: 16px;
     min-width: 1100px;
@@ -7,7 +7,7 @@ body {
     -webkit-font-smoothing: antialiased;
     font-family: PingFang SC, Helvetica Neue, Arial, sans-serif;
 }
-body,
+section,
 p {
     margin: 0;
 }
@@ -140,54 +140,54 @@ code.language-css:after {
 .van-doc-content a {
     color: #0079f3;
 }
-.van-doc-content body {
+.van-doc-content section {
     padding: 13px 40px;
     overflow: hidden;
 }
-.van-doc-content body > h1,
-.van-doc-content body > h2,
-.van-doc-content body > h3,
-.van-doc-content body > h4,
-.van-doc-content body > h5,
-.van-doc-content body > h6 {
+.van-doc-content  h1,
+.van-doc-content  h2,
+.van-doc-content  h3,
+.van-doc-content  h4,
+.van-doc-content  h5,
+.van-doc-content > h6 {
     line-height: 1.5;
     font-weight: 400;
     margin: 20px 0 10px;
     color: #333;
 }
-.van-doc-content body > h1 {
+.van-doc-content  h1 {
     font-size: 36px;
 }
-.van-doc-content body > h2 {
+.van-doc-content section  h2 {
     font-size: 30px;
     margin-bottom: 25px;
 }
-.van-doc-content body > h3 {
+.van-doc-content section  h3 {
     font-size: 22px;
     margin-top: 45px;
 }
-.van-doc-content body > h2 + h3 {
+.van-doc-content section  h2 + h3 {
     margin-top: 25px;
 }
-.van-doc-content body > h4 {
+.van-doc-content section  h4 {
     font-size: 16px;
     margin-bottom: 15px;
 }
-.van-doc-content body > h5 {
+.van-doc-content section  h5 {
     font-size: 14px;
 }
-.van-doc-content body > h6 {
+.van-doc-content section  h6 {
     font-size: 14px;
     color: #666;
 }
-.van-doc-content body > p {
+.van-doc-content section  p {
     margin: 15px 0;
     font-size: 14px;
     line-height: 26px;
     color: #34495e;
 }
-.van-doc-content body > ol li,
-.van-doc-content body > ul li {
+.van-doc-content section  ol li,
+.van-doc-content section  ul li {
     color: #34495e;
     font-size: 14px;
     line-height: 22px;
@@ -195,8 +195,8 @@ code.language-css:after {
     padding-left: 15px;
     position: relative;
 }
-.van-doc-content body > ol li:before,
-.van-doc-content body > ul li:before {
+.van-doc-content section > ol li:before,
+.van-doc-content section > ul li:before {
     content: "";
     position: absolute;
     top: 0;
@@ -209,17 +209,17 @@ code.language-css:after {
     box-sizing: border-box;
     border: 1px solid #666;
 }
-.van-doc-content body > ol li li,
-.van-doc-content body > ul li li {
+.van-doc-content section > ol li li,
+.van-doc-content section > ul li li {
     margin-left: 0;
 }
-.van-doc-content body > hr {
+.van-doc-content section > hr {
     border: 0 none;
     border-top: 1px solid #eee;
 }
-.van-doc-content body li > code,
-.van-doc-content body p > code,
-.van-doc-content body table code {
+.van-doc-content section li > code,
+.van-doc-content section p > code,
+.van-doc-content section table code {
     margin: 2px;
     padding: 2px 7px;
     display: inline;

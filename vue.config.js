@@ -33,10 +33,10 @@ module.exports = {
       .use('vue-loader')
       .loader('vue-loader')
       .end()
-      .use('vue-markdown-loader')
-      .loader('vue-markdown-loader/lib/markdown-compiler')
+      .use('@vant/markdown-loader')
+      .loader('@vant/markdown-loader')
       .options({
-        raw: true,
+        linkOpen: true
       });
   },
 };

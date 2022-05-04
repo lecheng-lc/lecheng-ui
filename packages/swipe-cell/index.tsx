@@ -1,77 +1,233 @@
-import { defineComponent, ref, getCurrentInstance,ComponentInternalInstance,type PropType } from 'vue'
-import { use } from '@@/utils'
-const [bem] = use('slide')
-import './index.scss'
-export type Interceptor = (
-  ...args: any[]
-) => Promise<boolean> | boolean | undefined | void;
+import {
+  ref,
+  Ref,
+  reactive,
+  computed,
+  defineComponent,
+  type PropType,
+  type ExtractPropTypes,
+  type ComponentPublicInstance
+} from 'vue'
+// import { useTouch } from '../composables/index'
+// import { useTouch,useRect, useExpose, useClickAway } from '../composables/index'
+import { useTouch } from '../composables/useTouch';
+import { useExpose } from '../composables/use-expose';
+import { useClickAway } from '../composables/use-click-awway';
+import { useRect } from '../composables/use-rect';
+
+import {
+  clamp,
+  isDef,
+  numericProp,
+  Interceptor,
+  preventDefault,
+  callInterceptor,
+  createNamespace,
+  makeNumericProp,
+} from '../utils/index';
+const [name, bem] = createNamespace('swipe-cell')
+type SwipeCellSide = 'left' | 'right';
+type SwipeCellPosition = SwipeCellSide | 'cell' | 'outside';
+type SwipeCellExpose = {
+  open: (side: SwipeCellSide) => void;
+  close: (position: SwipeCellPosition) => void;
+}
 const swipeCellProps = {
+  name: makeNumericProp(''),
   disabled: Boolean,
-  rightWidth: [Number, String],
+  leftWidth: numericProp,
+  rightWidth: numericProp,
   beforeClose: Function as PropType<Interceptor>,
   stopPropagation: Boolean,
-}
+};
 
+type SwipeCellProps = ExtractPropTypes<typeof swipeCellProps>;
+type SwipeCellInstance = ComponentPublicInstance<
+  SwipeCellProps,
+  SwipeCellExpose
+>
 export default defineComponent({
+  name,
   props: swipeCellProps,
-  setup(props) {
-    const startX = ref(0)
-    const endX = ref(0)
-    const moveX = ref(0)
-    const disX = ref(0)
-    const deleteSlider = ref('')
-    const { proxy } = getCurrentInstance() as ComponentInternalInstance
-    const mouseStart = (ev:MouseEvent)=>{
-      ev = ev
-      ev.preventDefault()
-      startX.value = ev.clientX
-    }
-    const mouseMove = (ev:any) =>{
-      console.log(ev)
-      ev = ev
-      ev.preventDefault()
-      // 获取删除按钮的宽度，此宽度为滑块左滑的最大距离
-      let wd = (proxy?.$refs.remove as any).offsetWidth
-        // 滑动时距离浏览器左侧实时距离
-        moveX.value = ev.clientX
-        // 起始位置减去 实时的滑动的距离，得到手指实时偏移距离
-        disX.value = startX.value - moveX.value
-        // 如果是向右滑动或者不滑动，不改变滑块的位置
-        if (disX.value < 0 || disX.value == 0) {
-          deleteSlider.value = "transform:translateX(0px)"
-          // 大于0，表示左滑了，此时滑块开始滑动
-        } else if (disX.value > 0) {
-          // 具体滑动距离我取的是 手指偏移距离*5
-          deleteSlider.value = "transform:translateX(-" + disX.value * 5 + "px)"
-          // 最大也只能等于删除按钮宽度
-          if (disX.value * 5 >= wd) {
-            deleteSlider.value = "transform:translateX(-" + wd + "px)"
-          }
+  emits: ['open', 'close', 'click'],
+  setup(props, { emit, slots }) {
+    let opened: boolean;
+    let lockClick: boolean;
+    let startOffset: number;
+
+    const root = ref<HTMLElement>();
+    const leftRef = ref<HTMLElement>();
+    const rightRef = ref<HTMLElement>();
+
+    const state = reactive({
+      offset: 0,
+      dragging: false,
+    });
+
+    const touch = useTouch();
+
+    const getWidthByRef = (ref: Ref<HTMLElement | undefined>) =>
+      ref.value ? useRect(ref).width : 0;
+
+    const leftWidth = computed(() =>
+      isDef(props.leftWidth) ? +props.leftWidth : getWidthByRef(leftRef)
+    );
+
+    const rightWidth = computed(() =>
+      isDef(props.rightWidth) ? +props.rightWidth : getWidthByRef(rightRef)
+    );
+
+    const open = (side: SwipeCellSide) => {
+      state.offset = side === 'left' ? leftWidth.value : -rightWidth.value;
+      if (!opened) {
+        opened = true;
+        emit('open', {
+          name: props.name,
+          position: side,
+        });
+      }
+    };
+
+    const close = (position: SwipeCellPosition) => {
+      state.offset = 0;
+
+      if (opened) {
+        opened = false;
+        emit('close', {
+          name: props.name,
+          position,
+        });
+      }
+    };
+
+    const toggle = (side: SwipeCellSide) => {
+      const offset = Math.abs(state.offset);
+      const THRESHOLD = 0.15;
+      const threshold = opened ? 1 - THRESHOLD : THRESHOLD;
+      const width = side === 'left' ? leftWidth.value : rightWidth.value;
+
+      if (width && offset > width * threshold) {
+        open(side);
+      } else {
+        close(side);
+      }
+    };
+
+    const onTouchStart = (event: TouchEvent) => {
+      if (!props.disabled) {
+        startOffset = state.offset;
+        touch.start(event);
+      }
+    };
+
+    const onTouchMove = (event: TouchEvent) => {
+      if (props.disabled) {
+        return;
+      }
+
+      const { deltaX } = touch;
+      touch.move(event);
+
+      if (touch.isHorizontal()) {
+        lockClick = true;
+        state.dragging = true;
+
+        const isEdge = !opened || deltaX.value * startOffset < 0;
+        if (isEdge) {
+          preventDefault(event, props.stopPropagation);
         }
-    }
-    const mouseEnd = (ev: MouseEvent) => {
-      ev = ev
-      let wd = (proxy?.$refs.remove as any).offsetWidth
-        let endX = ev.clientX
-        disX.value = startX.value - endX
-        //如果距离小于删除按钮一半,强行回到起点
-        if (disX.value * 5 < wd / 2) {
-          deleteSlider.value = 'transform:translateX(0px)'
-        } else {
-          //大于一半 滑动到最大值
-          deleteSlider.value = `transform:translateX(-${wd}px)`
+
+        state.offset = clamp(
+          deltaX.value + startOffset,
+          -rightWidth.value,
+          leftWidth.value
+        );
+      }
+    };
+
+    const onTouchEnd = () => {
+      if (state.dragging) {
+        state.dragging = false;
+        toggle(state.offset > 0 ? 'left' : 'right');
+
+        // compatible with desktop scenario
+        setTimeout(() => {
+          lockClick = false;
+        }, 0);
+      }
+    };
+
+    const onClick = (position: SwipeCellPosition = 'outside') => {
+      emit('click', position);
+
+      if (opened && !lockClick) {
+        callInterceptor(props.beforeClose, {
+          args: [
+            {
+              name: props.name,
+              position,
+            },
+          ],
+          done: () => close(position),
+        });
+      }
+    };
+
+    const getClickHandler =
+      (position: SwipeCellPosition, stop?: boolean) => (event: MouseEvent) => {
+        if (stop) {
+          event.stopPropagation();
         }
-    }
-    return () => (
-      <div class={bem('wrapper')}>
-        <div class={bem('content', false)}>
-          <div class={bem('content', 'slide',false)} onTouchmove={(event)=>mouseMove(event)} onMousedown={(event)=>mouseStart(event)} onMouseleave={(event)=>mouseEnd(event)} style={deleteSlider.value}>
+        onClick(position);
+      };
+
+    const renderSideContent = (
+      side: SwipeCellSide,
+      ref: Ref<HTMLElement | undefined>
+    ) => {
+      const contentSlot = slots[side];
+      if (contentSlot) {
+        return (
+          <div
+            ref={ref}
+            class={bem(side)}
+            onClick={getClickHandler(side, true)}
+          >
+            {contentSlot()}
           </div>
-          <div class={bem('remove', false)} ref='remove'>
-            {/* 删除 */}
-          </div>
+        );
+      }
+    };
+
+    useExpose<SwipeCellExpose>({
+      open,
+      close,
+    });
+
+    useClickAway(root, () => onClick('outside'), { eventName: 'touchstart' })
+    return () => {
+      const wrapperStyle = {
+        transform: `translate3d(${state.offset}px, 0, 0)`,
+        transitionDuration: state.dragging ? '0s' : '.6s',
+      };
+      return (
+        <div
+        ref={root}
+        class={bem()}
+        onClick={getClickHandler('cell', lockClick)}
+        onTouchstart={onTouchStart}
+        onTouchmove={onTouchMove}
+        onTouchend={onTouchEnd}
+        onTouchcancel={onTouchEnd}
+      >
+        <div class={bem('wrapper')} style={wrapperStyle}>
+          {renderSideContent('left', leftRef)}
+          {slots.default?.()}
+          {renderSideContent('right', rightRef)}
         </div>
       </div>
-    )
-  }
+      )
+
+    }
+  },
 })

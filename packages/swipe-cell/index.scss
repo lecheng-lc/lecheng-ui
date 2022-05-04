@@ -1,33 +1,27 @@
-.lc-slide {
-  &__content{
-    width: 100%;
-    height: 60px;
-    position: relative;
-    user-select: none;
-    &--slide{
-      position: absolute;
-      left: 0;
-      right: 0;
-      top: 0;
-      bottom: 0;
-      background-color:grey;
-      z-index: 100;
-      transition: 0.3s;
-    }
+.lc-swipe-cell {
+  position: relative;
+  overflow: hidden;
+  cursor: grab;
+
+  &__wrapper {
+    transition-timing-function: cubic-bezier(0.18, 0.89, 0.32, 1);
+    transition-property: transform;
   }
-  &__remove{
+
+  &__left,
+  &__right {
     position: absolute;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    width: 100px;
-    height: 60px;
-    background-color:chocolate;
-    right: 0;
     top: 0;
-    color: #fff;
-    text-align: center;
-    font-size: 20px;
-    line-height: 200px;
+    height: 100%;
+  }
+
+  &__left {
+    left: 0;
+    transform: translate3d(-100%, 0, 0);
+  }
+
+  &__right {
+    right: 0;
+    transform: translate3d(100%, 0, 0);
   }
 }

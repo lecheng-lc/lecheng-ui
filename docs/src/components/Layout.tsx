@@ -5,6 +5,7 @@ import { PackageItemGroup, PackageItem, routerDir } from '../constant'
 const [bem] = use('layout')
 import '../assets/components-css/Layout.stylus'
 import { useRoute } from 'vue-router'
+const TOP_DEFAULT_DIS = 60
 export default defineComponent({
   components: {
     'nav-items': NavItems
@@ -18,8 +19,11 @@ export default defineComponent({
     const docScrollTop = ref<number>(0)
     const route = useRoute()
     const { proxy } = getCurrentInstance() as ComponentInternalInstance
-    const isScrollOut = computed(() => {
-      return docScrollTop.value > 40
+    const navStyleTop = computed(() => {
+      return (TOP_DEFAULT_DIS  - docScrollTop.value) < 0 ? 0 : TOP_DEFAULT_DIS  - docScrollTop.value
+    })
+    const isScrollOut = computed(()=>{
+      return docScrollTop.value > 60
     })
     const changeIframe = (pathName: string) => {
       demoSrc.value = routerDir.some((obj) => obj.items.some((x) => pathName === x.name && x.noDemo === true))
@@ -50,15 +54,15 @@ export default defineComponent({
           </div>
         </div>
         <div class={bem('content', false)}>
-          <div class={(isScrollOut.value ? bem('left', 'sticky') : bem('content','left', false))}>
-            <nav-items list={navItems} onChange={navChange} />
+          <div class={ bem('content--left', 'sticky', false )}  style={{top:`${navStyleTop.value}px`}}>
+            <nav-items list={navItems} onChange={navChange}  />
           </div>
           <div class={bem('content','center', false)}>
             <div class="van-doc-content">{(slots as any).center()}</div>
           </div>
           {
             demoSrc.value ? (
-              <div class={(isScrollOut.value ? bem('right', 'sticky') : bem('content','right', false))}>
+              <div class={isScrollOut.value ? bem('content--right', 'fixed'): bem('content--right', 'sticky')}>
                 <iframe frameborder="0"  src={demoSrc.value} />
               </div>
             ) : null
