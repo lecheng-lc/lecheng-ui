@@ -8,22 +8,22 @@ import {
   type ExtractPropTypes,
   type ComponentPublicInstance
 } from 'vue'
-// import { useTouch } from '../composables/index'
+// import { useTouch } from '../composables/index.ts'
 // import { useTouch,useRect, useExpose, useClickAway } from '../composables/index'
-import { useTouch } from '../composables/useTouch';
-import { useExpose } from '../composables/use-expose';
+import { useTouch } from '../composables/use-touch'; // touch结合touch元素信息
+import { useExpose } from '../composables/use-expose'; // 挂在方法到vue getCurrentInstance().proxy上去
 import { useClickAway } from '../composables/use-click-awway';
 import { useRect } from '../composables/use-rect';
 
 import {
   clamp,
   isDef,
-  numericProp,
-  Interceptor,
-  preventDefault,
-  callInterceptor,
-  createNamespace,
-  makeNumericProp,
+  numericProp, // [number,string]
+  Interceptor,  // 事件拦截器type
+  preventDefault, // 阻止默认事件
+  callInterceptor, // 事件拦截器
+  createNamespace, // 创建bem风格
+  makeNumericProp, //  类型校验
 } from '../utils/index';
 const [name, bem] = createNamespace('swipe-cell')
 type SwipeCellSide = 'left' | 'right';
@@ -40,8 +40,8 @@ const swipeCellProps = {
   beforeClose: Function as PropType<Interceptor>,
   stopPropagation: Boolean,
 };
-
-type SwipeCellProps = ExtractPropTypes<typeof swipeCellProps>;
+type a = keyof typeof swipeCellProps
+type SwipeCellProps = ExtractPropTypes<typeof swipeCellProps>; // 精确的提取类型约束
 type SwipeCellInstance = ComponentPublicInstance<
   SwipeCellProps,
   SwipeCellExpose
@@ -51,10 +51,10 @@ export default defineComponent({
   props: swipeCellProps,
   emits: ['open', 'close', 'click'],
   setup(props, { emit, slots }) {
+    console.log(props,'-----')
     let opened: boolean;
     let lockClick: boolean;
     let startOffset: number;
-
     const root = ref<HTMLElement>();
     const leftRef = ref<HTMLElement>();
     const rightRef = ref<HTMLElement>();
@@ -90,7 +90,6 @@ export default defineComponent({
 
     const close = (position: SwipeCellPosition) => {
       state.offset = 0;
-
       if (opened) {
         opened = false;
         emit('close', {
@@ -131,12 +130,12 @@ export default defineComponent({
       if (touch.isHorizontal()) {
         lockClick = true;
         state.dragging = true;
-
+        // 对edge浏览器做判定
         const isEdge = !opened || deltaX.value * startOffset < 0;
         if (isEdge) {
           preventDefault(event, props.stopPropagation);
         }
-
+        // 算移动距离
         state.offset = clamp(
           deltaX.value + startOffset,
           -rightWidth.value,
@@ -149,7 +148,6 @@ export default defineComponent({
       if (state.dragging) {
         state.dragging = false;
         toggle(state.offset > 0 ? 'left' : 'right');
-
         // compatible with desktop scenario
         setTimeout(() => {
           lockClick = false;
@@ -159,7 +157,6 @@ export default defineComponent({
 
     const onClick = (position: SwipeCellPosition = 'outside') => {
       emit('click', position);
-
       if (opened && !lockClick) {
         callInterceptor(props.beforeClose, {
           args: [
@@ -168,11 +165,16 @@ export default defineComponent({
               position,
             },
           ],
-          done: () => close(position),
-        });
+          done: () => close(position)
+        })
       }
-    };
-
+    }
+    /**
+     * @description 点击事件
+     * @param position
+     * @param stop
+     * @returns
+     */
     const getClickHandler =
       (position: SwipeCellPosition, stop?: boolean) => (event: MouseEvent) => {
         if (stop) {
@@ -180,7 +182,7 @@ export default defineComponent({
         }
         onClick(position);
       };
-
+    // 渲染slot内容
     const renderSideContent = (
       side: SwipeCellSide,
       ref: Ref<HTMLElement | undefined>

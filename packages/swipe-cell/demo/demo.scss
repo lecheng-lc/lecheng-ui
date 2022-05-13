@@ -1,0 +1,22 @@
+.lc-swipe-cell {
+  background-color: rebeccapurple;
+  height:50px;
+  color:#fff;
+  &__wrapper{
+    height:50px;
+    display: flex;
+    align-items: center;
+  }
+  &__left{
+    display: flex;
+    align-items: center;
+    background-color:burlywood;
+    color:#fff;
+  }
+  &__right{
+    display: flex;
+    align-items: center;
+    color:#fff;
+    background-color:chocolate;
+  }
+}

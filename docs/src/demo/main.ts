@@ -1,6 +1,7 @@
 import {createApp} from 'vue'
 import App from '../App'
 import router from './router'
+import '../../../packages/style/base.styl'
 import  '@vant/touch-emulator'
 import VueLazyload from 'vue-lazyload-next'
 const app = createApp(App)

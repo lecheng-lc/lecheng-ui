@@ -14,9 +14,7 @@ export function useClickAway(
   if (!inBrowser) {
     return;
   }
-
   const { eventName = 'click' } = options;
-
   const onClick = (event: Event) => {
     const element = unref(target);
     if (element && !element.contains(event.target as Node)) {

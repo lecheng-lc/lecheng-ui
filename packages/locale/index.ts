@@ -22,7 +22,6 @@ export const Locale = {
   use(newLang: string, newMessages?: Message) {
     // console.log(newLang,'被调用', newMessages)
     lang.value = newLang;
-    console.log(newLang,'---',messages)
     this.add({ [newLang]: newMessages });
   },
   /**

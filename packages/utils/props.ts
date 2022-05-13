@@ -5,7 +5,7 @@
  import type { PropType } from 'vue';
 
  export const unknownProp = null as unknown as PropType<unknown>;
-
+ // 元祖类型  数字或者字符串
  export const numericProp = [Number, String];
 
  export const truthProp = {

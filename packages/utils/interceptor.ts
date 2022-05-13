@@ -4,7 +4,11 @@ import { isPromise } from './validate';
 export type Interceptor = (
   ...args: any[]
 ) => Promise<boolean> | boolean | undefined | void;
-
+/**
+ * @description :拦截器
+ * @param interceptor
+ * @param param1
+ */
 export function callInterceptor(
   interceptor: Interceptor | undefined,
   {
