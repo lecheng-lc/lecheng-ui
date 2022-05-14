@@ -10,7 +10,7 @@ declare global {
     vueRouter: Router;
   }
 }
-
+console.log(123)
 /**
  * @description 用来控制iframe中demo示例的汉化
  */
@@ -18,19 +18,20 @@ export function initDemoLocale() {
   Locale.add({
     'en-US': enUS,
   });
-
+  console.log(1223222)
   // switch lang after routing
-  if (window.vueRouter) {
-    window.vueRouter.afterEach((to) => {
-      const { lang } = to.meta || {};
-
-      if (lang) {
-        // console.log(1223)
-        // console.log(to)
-        Locale.use(lang as string);
-      }
-    });
-  }
+  window.addEventListener('storage',(event:StorageEvent)=>{
+    const lang = event.newValue
+    Locale.use(lang as string)
+  })
+  // if (window.vueRouter) {
+  //   window.vueRouter.afterEach((to) => {
+  //     const { lang } = to.meta || {};
+  //     if (lang) {
+  //       Locale.use(lang as string);
+  //     }
+  //   });
+  // }
 
   // add some basic locale messages
   Locale.add({

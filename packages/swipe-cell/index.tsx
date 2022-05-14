@@ -40,7 +40,6 @@ const swipeCellProps = {
   beforeClose: Function as PropType<Interceptor>,
   stopPropagation: Boolean,
 };
-type a = keyof typeof swipeCellProps
 type SwipeCellProps = ExtractPropTypes<typeof swipeCellProps>; // 精确的提取类型约束
 type SwipeCellInstance = ComponentPublicInstance<
   SwipeCellProps,

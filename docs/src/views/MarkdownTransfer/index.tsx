@@ -9,7 +9,6 @@ type MarkdownType = keyof typeof markdown
 export default defineComponent({
   name: 'MarkdonwTransfer',
   setup() {
-    console.log(222)
     const current = ref<MarkdownType>('Bem')
     const route = useRoute()
     let { proxy } = getCurrentInstance() as ComponentInternalInstance

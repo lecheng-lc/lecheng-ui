@@ -1,7 +1,6 @@
 section {
     color: #333;
     font-size: 16px;
-    min-width: 1100px;
     overflow-x: auto;
     background-color: #fff;
     -webkit-font-smoothing: antialiased;
@@ -135,7 +134,7 @@ code.language-css:after {
     -ms-flex: 1;
     flex: 1;
     position: relative;
-    padding: 0 0 75px;
+    padding: 0;
 }
 .van-doc-content a {
     color: #0079f3;

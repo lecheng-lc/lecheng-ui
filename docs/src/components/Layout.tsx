@@ -25,10 +25,19 @@ export default defineComponent({
     const isScrollOut = computed(()=>{
       return docScrollTop.value > 60
     })
+    const currentLanguage= ref<string>(window.localStorage.getItem('lcui_language') || 'zh-CN')
     const changeIframe = (pathName: string) => {
       demoSrc.value = routerDir.some((obj) => obj.items.some((x) => pathName === x.name && x.noDemo === true))
         ? ''
         : `./demo.html#/${pathName}`
+    }
+    const changeLanguage = ()=>{
+      if(currentLanguage.value === 'zh-CN'){
+        currentLanguage.value = 'en-US'
+      } else{
+        currentLanguage.value = 'zh-CN'
+      }
+      window.localStorage.setItem('lcui_language', currentLanguage.value)
     }
     const navChange = (nav: PackageItem) => {
       changeIframe(nav.name)
@@ -51,6 +60,11 @@ export default defineComponent({
                 <span class={bem('top', 'content-small', false)}>MARK</span>
               </div>
             </a>
+            <div class={bem('top','language', false)} onClick={changeLanguage}>
+              <span class={bem('top','language--text', false)}>
+                {currentLanguage.value}
+              </span>
+            </div>
           </div>
         </div>
         <div class={bem('content', false)}>

@@ -8,6 +8,7 @@ export function createTranslate(name: string) {
 
   return (path: string, ...args: unknown[]) => {
     const messages = locale.messages();
+    console.log(messages,'=-==')
     // console.log(messages)
     // console.log(prefix, name, path,'---',messages) // prefix-->demoI18n0.  name-->demo-i18n-0 path-->icon1
     const message = get(messages, prefix + path) || get(messages, path);

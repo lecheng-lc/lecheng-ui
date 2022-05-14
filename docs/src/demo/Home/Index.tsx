@@ -16,7 +16,7 @@ export default defineComponent({
 
     const toUrl = (name: string): void => {
       // 父组件通信
-      parent.window.location.href = parent.window.location.origin + '#/' + name
+      parent.window.location.href = parent.window.location.origin + '/' + name
     }
     return () => (
       <div class="demo-home">

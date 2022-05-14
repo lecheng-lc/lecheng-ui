@@ -1,3 +1,5 @@
+body
+  min-width 100vw !important
 .demo-home
   padding 15px 20px
   &-list

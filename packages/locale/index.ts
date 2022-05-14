@@ -5,7 +5,7 @@ import defaultMessages from './lang/zh-CN';
 type Message = Record<string, any>;
 type Messages = Record<string, Message>;
 
-const lang = ref('zh-CN');
+const lang = ref<string>(window.localStorage.getItem('lcui_language') || 'zh-CN')
 const messages = reactive<Messages>({
   'zh-CN': defaultMessages,
 });
@@ -20,7 +20,7 @@ export const Locale = {
    * @param newMessages  新增语言字段
    */
   use(newLang: string, newMessages?: Message) {
-    // console.log(newLang,'被调用', newMessages)
+
     lang.value = newLang;
     this.add({ [newLang]: newMessages });
   },
