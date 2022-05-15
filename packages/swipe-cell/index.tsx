@@ -50,7 +50,6 @@ export default defineComponent({
   props: swipeCellProps,
   emits: ['open', 'close', 'click'],
   setup(props, { emit, slots }) {
-    console.log(props,'-----')
     let opened: boolean;
     let lockClick: boolean;
     let startOffset: number;
@@ -65,11 +64,15 @@ export default defineComponent({
 
     const touch = useTouch();
 
-    const getWidthByRef = (ref: Ref<HTMLElement | undefined>) =>
-      ref.value ? useRect(ref).width : 0;
+    const getWidthByRef = (ref: Ref<HTMLElement | undefined>) =>{
+      return ref.value ? useRect(ref).width : 0;
+    }
 
-    const leftWidth = computed(() =>
-      isDef(props.leftWidth) ? +props.leftWidth : getWidthByRef(leftRef)
+    const leftWidth = computed(() =>{
+      return isDef(props.leftWidth) ? +props.leftWidth : getWidthByRef(leftRef)
+    }
+
+
     );
 
     const rightWidth = computed(() =>
@@ -135,6 +138,7 @@ export default defineComponent({
           preventDefault(event, props.stopPropagation);
         }
         // 算移动距离
+        console.log(deltaX.value + startOffset, -rightWidth.value,leftWidth.value)
         state.offset = clamp(
           deltaX.value + startOffset,
           -rightWidth.value,

@@ -1,6 +1,6 @@
 import { defineComponent } from "vue"
 import Index from '../index'
-import '../index.scss'
+import '../index.styl'
 import './demo.scss'
 import { useTranslate } from '../../composables/use-translate';
 const t = useTranslate({

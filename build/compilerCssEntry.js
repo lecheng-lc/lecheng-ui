@@ -2,13 +2,17 @@ const dependencyTree = require('dependency-tree')
 const path = require('path')
 const fs = require('fs-extra')
 const whiteList = ['popup']
+const { MODULE_ENV } = require('./common')
+console.log(MODULE_ENV, '=====')
+const libPath = MODULE_ENV === 'ES' ? '../es' : '../lib'
 const emptyStyleComponents = [
   'bem',
-  'http',
-  'dot',
-  'sentry',
-  'saas-utils',
-  'utils'
+  'composables',
+  'dynamic-import',
+  'frequently-qa',
+  'principle',
+  'utils',
+  'locale'
 ]
 
 function getComponentNameFromPath(file) {
@@ -17,18 +21,23 @@ function getComponentNameFromPath(file) {
   last = file.lastIndexOf('/')
   return file.substr(last + 1)
 }
+/**
+ * @description 获取依赖
+ * @param {*} component
+ * @returns
+ */
 function getDependence(component) {
   const result = [component]
   const components = require('./get-component')('style')
   const checkList = whiteList.concat(components)
-  const directory = path.resolve(__dirname, '../lib')
+  const directory = path.resolve(__dirname, libPath)
   const filename = path.join(directory, component, 'index.js')
   const dependence = dependencyTree({
     directory,
     filename,
     filter: path => !~path.indexOf('node_modules')
   })
-  // console.log(dependence)
+
   const search = (obj) => {
     Object.keys(obj).forEach(file => {
       const name = getComponentNameFromPath(file)
@@ -41,21 +50,21 @@ function getDependence(component) {
     })
   }
   search(dependence[filename])
+  // console.log('我看下result', result)
   return result
 }
 
 module.exports = function writeStyle(component) {
   // 收集依赖
   const styleArr = [...new Set(getDependence(component))]
-  const componentPath = path.resolve(__dirname, '../lib', component, 'style/index.js')
+  const componentPath = path.resolve(__dirname, libPath, component, 'style/index.js')
   if (emptyStyleComponents.some(x => x === component)) {
-    // fs.ensureFileSync(componentPath)
-    fs.ensureFileSync(path.resolve(__dirname, '../lib', component, 'index.css'))
+    fs.ensureFileSync(path.resolve(__dirname, libPath, component, 'index.css'))
   }
+  // console.log(componentPath,'][]]')
   const expression = styleArr.map(x =>
     `require("${component === x ? '../index.css' : `../../${x}/index.css`}")`
   ).join('\n')
-  console.log(`组件 ${component} 注入依赖样式 ${styleArr.join('/')}`)
   fs.outputFileSync(componentPath, expression)
   // }
 }

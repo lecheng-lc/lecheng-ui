@@ -1,7 +1,8 @@
 {
-  "name": "ui-component",
+  "name": "lc-ui",
   "version": "0.1.0",
   "private": true,
+  "module": "./lib/index.js",
   "scripts": {
     "docs": "vue-cli-service serve",
     "lint": "vue-cli-service lint",
@@ -9,23 +10,15 @@
     "build:js": "node build/build-components.js",
     "build:css": "node build/build-style.js",
     "build:css-entry": "node build/build-style-entry.js",
-    "build": "yarn build:js && yarn build:css && yarn build:css-entry",
+    "compile": "yarn build:js && yarn build:css && yarn build:css-entry",
+    "build": "node build/build.js",
     "build:global": "node build/build-global.js",
     "create": "node build/create-one.js",
     "build:one": "node build/build-one.js",
     "build:umd": "node build/gen-umd-entry.js && webpack --config build/webpack.config.js --mode production"
   },
-  "dependencies": {
-    "core-js": "^3.6.5",
-    "github-markdown-css": "^4.0.0",
-    "stylus": "^0.54.7",
-    "vue": "^3.2.31",
-    "vue-class-component": "^8.0.0-0",
-    "vue-compile": "^0.6.2",
-    "vue-lazyload-next": "^0.0.1",
-    "vue-loader": "^16.1.2",
-    "vue-router": "^4.0.0-0",
-    "vuex": "^4.0.0-0"
+  "peerDependencies": {
+    "vue": ">=3.2.31"
   },
   "devDependencies": {
     "@babel/plugin-proposal-private-property-in-object": "^7.16.7",
@@ -40,20 +33,34 @@
     "@vue/cli-plugin-vuex": "~4.5.0",
     "@vue/cli-service": "~4.5.0",
     "@vue/compiler-sfc": "^3.0.5",
+    "@vue/composition-api": "^1.6.1",
     "@vue/eslint-config-typescript": "^5.0.2",
     "babel-preset-vca-jsx": "^0.3.6",
-    "dart-sass": "^1.25.1",
+    "core-js": "^3.6.5",
+    "cross-env": "^7.0.3",
     "dependency-tree": "^8.1.2",
     "eslint": "^6.7.2",
     "eslint-plugin-import": "^2.20.2",
     "eslint-plugin-vue": "^7.0.0-0",
+    "execa": "5.1.1",
+    "github-markdown-css": "^4.0.0",
     "highlight.js": "^10.1.1",
     "lint-staged": "^9.5.0",
     "postcss-pxtorem": "^4.0.1",
     "sass": "^1.26.5",
     "sass-loader": "^8.0.2",
+    "stylus": "^0.54.7",
     "stylus-loader": "^3.0.2",
     "typescript": "^4.3.5",
-    "vue-markdown-loader": "^2.4.1"
+    "vue-compile": "^0.6.2",
+    "vue-lazyload-next": "^0.0.1",
+    "vue-loader": "^16.1.2",
+    "vue-markdown-loader": "^2.4.1",
+    "vue-router": "^4.0.0-0",
+    "vuex": "^4.0.0-0",
+    "webpack-cli": "^4.9.2"
+  },
+  "dependencies": {
+    "vue": "^3.2.33"
   }
 }

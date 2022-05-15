@@ -3,12 +3,17 @@ const path = require('path')
 
 const baseExcludes = [
   'style',
-  '.DS_Store'
+  '.DS_Store',
 ]
 
 const hasStyleExcludes = [
-  'mixins',
-  'utils'
+  'utils',
+  'composables',
+  'locale',
+  'bem',
+  'dynamic-import',
+  'frequently-qa',
+  'principle',
 ]
 
 module.exports = function (excludesType) {

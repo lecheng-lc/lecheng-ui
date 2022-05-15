@@ -2,9 +2,10 @@ const stylus = require('stylus')
 const path = require('path')
 const { readFileSync, readdirSync } = require('fs')
 const fs = require('fs-extra')
+const {MODULE_ENV} = require('./common')
 const CleanCSS = require('clean-css')
 const srcPath = path.join(__dirname, '../packages')
-const libPath = path.join(__dirname, '../lib')
+const libPath = path.join(__dirname, MODULE_ENV === 'ES' ? '../es' : '../lib')
 const getStylePath = name => path.join(srcPath, name, 'index.styl')
 
 exports.checkComponentHasStyle = function checkComponentHasStyle(component) {
