@@ -3,7 +3,6 @@ const path = require('path')
 const fs = require('fs-extra')
 const whiteList = ['popup']
 const { MODULE_ENV } = require('./common')
-console.log(MODULE_ENV, '=====')
 const libPath = MODULE_ENV === 'ES' ? '../es' : '../lib'
 const emptyStyleComponents = [
   'bem',
@@ -37,7 +36,6 @@ function getDependence(component) {
     filename,
     filter: path => !~path.indexOf('node_modules')
   })
-
   const search = (obj) => {
     Object.keys(obj).forEach(file => {
       const name = getComponentNameFromPath(file)
@@ -55,6 +53,7 @@ function getDependence(component) {
 }
 
 module.exports = function writeStyle(component) {
+  console.log(component,'===')
   // 收集依赖
   const styleArr = [...new Set(getDependence(component))]
   const componentPath = path.resolve(__dirname, libPath, component, 'style/index.js')
@@ -62,9 +61,17 @@ module.exports = function writeStyle(component) {
     fs.ensureFileSync(path.resolve(__dirname, libPath, component, 'index.css'))
   }
   // console.log(componentPath,'][]]')
-  const expression = styleArr.map(x =>
-    `require("${component === x ? '../index.css' : `../../${x}/index.css`}")`
-  ).join('\n')
+  let expression = ''
+  if(MODULE_ENV !== 'ES') {
+    expression = styleArr.map(x =>
+      `require("${component === x ? '../index.css' : `../../${x}/index.css`}")`
+    ).join('\n')
+  } else {
+    expression = styleArr.map(x =>
+      `import "${component === x ? '../index.css' : `../../${x}/index.css`}"`
+    ).join('\n')
+  }
+
   fs.outputFileSync(componentPath, expression)
   // }
 }

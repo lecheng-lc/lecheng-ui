@@ -2,6 +2,9 @@ const fs = require('fs-extra')
 const path = require('path')
 
 const baseExcludes = [
+  'dynamic-import',
+  'frequently-qa',
+  'principle',
   'style',
   '.DS_Store',
 ]

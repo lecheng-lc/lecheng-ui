@@ -9,6 +9,12 @@ module.exports = {
         modules: MODULE_ENV === 'ES' ? false: 'commonjs'
       }
     ],
+    [
+      '@vue/babel-preset-jsx',
+      {
+        functional: false
+      }
+    ],
     '@babel/preset-typescript'
   ],
   plugins: [

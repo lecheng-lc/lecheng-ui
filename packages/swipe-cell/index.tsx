@@ -14,7 +14,6 @@ import { useTouch } from '../composables/use-touch'; // touch结合touch元素�
 import { useExpose } from '../composables/use-expose'; // 挂在方法到vue getCurrentInstance().proxy上去
 import { useClickAway } from '../composables/use-click-awway';
 import { useRect } from '../composables/use-rect';
-
 import {
   clamp,
   isDef,
