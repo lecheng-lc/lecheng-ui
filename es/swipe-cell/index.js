@@ -1,3 +1,4 @@
+import { createVNode as _createVNode } from "vue";
 import { ref, reactive, computed, defineComponent } from 'vue'; // import { useTouch } from '../composables/index.ts'
 // import { useTouch,useRect, useExpose, useClickAway } from '../composables/index'
 
@@ -33,7 +34,6 @@ export default defineComponent({
   setup: function setup(props, _ref) {
     var emit = _ref.emit,
         slots = _ref.slots;
-    var h = this.$createElement;
     var opened;
     var lockClick;
     var startOffset;
@@ -178,12 +178,10 @@ export default defineComponent({
       var contentSlot = slots[side];
 
       if (contentSlot) {
-        return h("div", {
+        return _createVNode("div", {
           "ref": ref,
           "class": bem(side),
-          "on": {
-            "click": getClickHandler(side, true)
-          }
+          "onClick": getClickHandler(side, true)
         }, [contentSlot()]);
       }
     };
@@ -202,17 +200,15 @@ export default defineComponent({
         transform: "translate3d(" + state.offset + "px, 0, 0)",
         transitionDuration: state.dragging ? '0s' : '.6s'
       };
-      return h("div", {
+      return _createVNode("div", {
         "ref": root,
         "class": bem(),
-        "on": {
-          "click": getClickHandler('cell', lockClick),
-          "touchstart": onTouchStart,
-          "touchmove": onTouchMove,
-          "touchend": onTouchEnd,
-          "touchcancel": onTouchEnd
-        }
-      }, [h("div", {
+        "onClick": getClickHandler('cell', lockClick),
+        "onTouchstart": onTouchStart,
+        "onTouchmove": onTouchMove,
+        "onTouchend": onTouchEnd,
+        "onTouchcancel": onTouchEnd
+      }, [_createVNode("div", {
         "class": bem('wrapper'),
         "style": wrapperStyle
       }, [renderSideContent('left', leftRef), slots.default == null ? void 0 : slots.default(), renderSideContent('right', rightRef)])]);

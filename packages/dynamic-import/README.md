@@ -299,7 +299,7 @@ import 'style.css'
 ![image-20211203095656755.png](https://p3-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/cd8676cbfbb3467080265b255043b008~tplv-k3u1fbpfcp-zoom-1.image)
 
 更多关于`Tree Shaking`的内容可以阅读[Tree Shaking](https://link.juejin.cn?target=https%3A%2F%2Fwebpack.docschina.org%2Fguides%2Ftree-shaking%2F "https://webpack.docschina.org/guides/tree-shaking/")。
-
+[Tree shaking详细用例](https://blog.csdn.net/weixin_43334673/article/details/107811487)
 # 使用unplugin-vue-components插件
 
 `varlet`组件库官方文档上按需引入一节里提到使用的是[unplugin-vue-components](https://link.juejin.cn?target=https%3A%2F%2Fgithub.com%2Fantfu%2Funplugin-vue-components "https://github.com/antfu/unplugin-vue-components")插件：
