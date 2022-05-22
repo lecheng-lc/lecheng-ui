@@ -19,7 +19,6 @@ const { compilerSingleCss } = require('./compilerCss')
 async function buildTypeDeclarations() {
   // await Promise.all([preCompileDir(ES_DIR), preCompileDir(LIB_DIR)]);
   const tsConfig = path.join(process.cwd(), '../tsconfig.declaration.json');
-
   if (existsSync(tsConfig)) {
     await execa('tsc', ['-p', tsConfig]);
   }
