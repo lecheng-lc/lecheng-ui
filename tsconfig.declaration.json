@@ -2,7 +2,7 @@
   "extends": "./tsconfig.json",
   "compilerOptions": {
     "declaration": true,
-    "declarationDir": ".",
+    "declarationDir": "./types",
     "emitDeclarationOnly": true
   },
   "include": ["packages/**/*"],
@@ -10,7 +10,6 @@
   "exclude": [
     "node_modules",
     "**/test/**/*",
-    "**/demo/**/*",
-    "**/vue-lazyload/*"
+    "**/demo/**/*"
   ]
 }

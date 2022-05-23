@@ -1,5 +1,5 @@
 import { defineComponent } from "vue"
-import Index from '../index'
+import Index from '../SwipeCell'
 import '../index.styl'
 import './demo.scss'
 import { useTranslate } from '../../composables/use-translate';

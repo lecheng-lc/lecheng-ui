@@ -39,7 +39,7 @@ const swipeCellProps = {
   beforeClose: Function as PropType<Interceptor>,
   stopPropagation: Boolean,
 };
-type SwipeCellProps = ExtractPropTypes<typeof swipeCellProps>; // 精确的提取类型约束
+export type SwipeCellProps = ExtractPropTypes<typeof swipeCellProps>; // 精确的提取类型约束
 type SwipeCellInstance = ComponentPublicInstance<
   SwipeCellProps,
   SwipeCellExpose
