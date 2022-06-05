@@ -41,6 +41,7 @@ const ROOT = process.cwd()
 const PACKAGE_JSON_FILE = path.join(ROOT, 'package.json')
 const ES_DIR = path.join(__dirname, '../es')
 const LIB_DIR = path.join(__dirname, '../lib')
+const SRC_DIR = path.join(__dirname, '../packages')
 
 module.exports = {
   MODULE_ENV: process.env.MODULE_ENV,
@@ -50,5 +51,6 @@ module.exports = {
   PACKAGE_JSON_FILE,
   getPackageJson,
   ES_DIR,
-  LIB_DIR
+  LIB_DIR,
+  SRC_DIR
 }

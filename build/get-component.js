@@ -19,15 +19,19 @@ const hasStyleExcludes = [
   'principle',
 ]
 
-module.exports = function (excludesType) {
+module.exports = function (excludesType, targetDir) {
   let excludes
-  if (excludesType === undefined) {
+  if (!excludesType) {
     excludes = baseExcludes
   } else if (excludesType === 'style') {
     excludes = baseExcludes.concat(hasStyleExcludes)
   }
-
-  const dirs = fs.readdirSync(path.resolve(__dirname, '../packages'))
+  let dirs = []
+  if(targetDir) {
+    dirs = fs.readdirSync(targetDir)
+  } else {
+    dirs = fs.readdirSync(path.resolve(__dirname, '../packages'))
+  }
   return dirs.filter(dirName => excludes.indexOf(dirName) === -1)
 }
 

@@ -1,14 +1,17 @@
 const execa = require('execa')
 const path = require('path')
 const { relative } = require('path')
-const { copy,existsSync } = require('fs-extra')
-const { ES_DIR, LIB_DIR } = require('./common')
+const { copy, existsSync } = require('fs-extra')
+const { ES_DIR, LIB_DIR, SRC_DIR } = require('./common')
 const genPackageEntry = require('./package-entry')
 const { genPacakgeStyle } = require('./gen-package-style')
 const compileJs = require('./compilerJs')
 const { compilerSingleCss } = require('./compilerCss')
+const components = require('./get-component')
+
+
 // execa.sync('rm',['-rf','./lib','./es'])
-// process.env.MODULE_ENV = 'ES'
+process.env.MODULE_ENV = 'ES'
 // execa.sync('yarn', ['compile'],{
 //   stdio: ['inherit', 'inherit', 'pipe']
 // })
@@ -16,17 +19,32 @@ const { compilerSingleCss } = require('./compilerCss')
 // execa.sync('yarn', ['compile'],{
 //   stdio: ['inherit', 'inherit', 'pipe']
 // })
+
+async function copySourceCode() {
+  return Promise.all([copy(SRC_DIR, ES_DIR), copy(SRC_DIR, LIB_DIR)]);
+}
+async function compileDir(dir, format) {
+  const targetComponents = components('', dir)
+  console.log(targetComponents)
+  console.log(888777)
+  targetComponents.forEach(compileJs);
+}
+async function buildESMOutputs() {
+  await compileDir(ES_DIR, 'esm')
+}
 async function buildTypeDeclarations() {
   // await Promise.all([preCompileDir(ES_DIR), preCompileDir(LIB_DIR)]);
   const tsConfig = path.join(process.cwd(), './tsconfig.declaration.json');
-  console.log(process.cwd())
   if (existsSync(tsConfig)) {
     await execa('tsc', ['-p', tsConfig]);
   }
 }
- buildTypeDeclarations()
+async function gogo() {
+  await copySourceCode()
+  await buildESMOutputs()
+}
 
-
+gogo()
 // async function buildPacakgeEntry() {
 //   const esEntryFile = path.join(ES_DIR, 'index.js');
 //   const libEntryFile = path.join(LIB_DIR, 'index.js');

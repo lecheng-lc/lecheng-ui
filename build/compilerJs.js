@@ -15,7 +15,10 @@ const isDir = dir => {
 }
 // const isCode = path => !/(demo|test|\.md)$/.test(path)
 const isScript = path => scriptRegExp.test(path)
-const srcPath = path.resolve(__dirname, '../packages')
+process.env.MODULE_ENV = 'ES'
+
+console.log(process.env.MODULE_ENV,'=====')
+const srcPath = path.resolve(__dirname, MODULE_ENV === 'ES' ? '../es' : '../lib')
 module.exports = function compilerJs(dir) {
   let files = []
   dir = /^\//.test(dir) ? dir : path.join(srcPath, dir)
@@ -23,7 +26,6 @@ module.exports = function compilerJs(dir) {
     files = fs.readdirSync(dir)
     files.forEach(file => {
       const filePath = path.join(dir, file)
-      const fileLibPath = filePath.replace('/packages/', MODULE_ENV === 'ES' ? '/es/' : '/lib/')
       // scan dir and not demo
       if (isDir(filePath)) {
         return compilerJs(filePath)
@@ -31,7 +33,7 @@ module.exports = function compilerJs(dir) {
       // compile js or ts
       if (isScript(file)) {
         const { code } = babel.transformFileSync(filePath, babelConfig)
-        fs.outputFileSync(fileLibPath.replace(scriptRegExp, '.js'), code)
+        fs.outputFileSync(filePath.replace(scriptRegExp, '.js'), code)
       }
     })
   } else {
