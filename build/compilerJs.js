@@ -1,7 +1,7 @@
 const path = require('path')
 const fs = require('fs-extra')
 const babel = require('@babel/core')
-const { MODULE_ENV } = require('./common')
+const { MODULE_ENV ,isAsset,isStyle} = require('./common')
 const babelConfig = { // babel配置
   configFile: path.join(__dirname, './babel.config.js')
 }
@@ -30,16 +30,24 @@ module.exports = function compilerJs(dir) {
       if (isDir(filePath)) {
         return compilerJs(filePath)
       }
+      if (filePath.includes('.d.ts')) {
+        return;
+      }
       // compile js or ts
       if (isScript(file)) {
         const { code } = babel.transformFileSync(filePath, babelConfig)
         fs.outputFileSync(filePath.replace(scriptRegExp, '.js'), code)
+        fs.removeSync(filePath)
+      }
+      else if(!isAsset(filePath) && !isStyle(filePath)){
+        fs.removeSync(filePath)
       }
     })
   } else {
     if (isScript(dir)) {
       const { code } = babel.transformFileSync(dir, babelConfig)
       fs.outputFileSync(dir.replace(scriptRegExp, '.js'), code)
+      // fs.removeSync(filePath)
     }
   }
 

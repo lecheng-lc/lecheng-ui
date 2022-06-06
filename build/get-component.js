@@ -6,6 +6,7 @@ const baseExcludes = [
   'frequently-qa',
   'principle',
   'style',
+  'bem',
   '.DS_Store',
 ]
 
@@ -13,7 +14,6 @@ const hasStyleExcludes = [
   'utils',
   'composables',
   'locale',
-  'bem',
   'dynamic-import',
   'frequently-qa',
   'principle',

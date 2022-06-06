@@ -4,7 +4,7 @@ const { readFileSync, readdirSync } = require('fs')
 const fs = require('fs-extra')
 const { MODULE_ENV } = require('./common')
 const CleanCSS = require('clean-css')
-const srcPath = path.join(__dirname, '../packages')
+const srcPath = path.join(__dirname, MODULE_ENV === 'ES' ? '../es' : '../lib')
 const libPath = path.join(__dirname, MODULE_ENV === 'ES' ? '../es' : '../lib')
 const getStylePath = name => path.join(srcPath, name, 'index.styl')
 
@@ -18,7 +18,7 @@ exports.compilerCss = function compilerCss(name) {
     .include(path.join(srcPath,'./style'))
     .render(function (err, css) {
       if (err) throw err
-      console.log(`编译 ${name}/index.styl`)
+      // console.log(`编译 ${name}/index.styl`)
       fs.outputFileSync(path.join(libPath, name, 'index.css'), new CleanCSS().minify(css).styles)
     })
 }

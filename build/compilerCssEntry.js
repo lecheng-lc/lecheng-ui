@@ -47,8 +47,8 @@ function getDependence(component) {
       }
     })
   }
+  console.log('我看下result', filename)
   search(dependence[filename])
-  // console.log('我看下result', result)
   return result
 }
 
