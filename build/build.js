@@ -9,9 +9,10 @@ const compileJs = require('./compilerJs')
 const { compilerSingleCss } = require('./compilerCss')
 const components = require('./get-component')
 const {buildStyle} = require('./build-style')
-const {buildEntry} = require('./build-style-entry')
+const {buildStyleEntry} = require('./build-style-entry')
 execa.sync('rm',['-rf','./lib','./es'])
 const esEntryFile = path.join(ES_DIR, 'index.js');
+
 async function copySourceCode() {
   return Promise.all([copy(SRC_DIR, ES_DIR), copy(SRC_DIR, LIB_DIR)]);
 }
@@ -38,38 +39,56 @@ async function compileDir(dir, format) {
 async function buildESMOutputs() {
   await compileDir(ES_DIR, 'esm')
 }
+async function buildCJSOutputs() {
+  await compileDir(LIB_DIR, 'cjs')
+}
 async function buildTypeDeclarations() {
-  await Promise.all([preCompileDir(ES_DIR), preCompileDir(LIB_DIR)]);
+  await Promise.all([preCompileDir(ES_DIR),preCompileDir(LIB_DIR)]);
   const tsConfig = path.join(process.cwd(), './tsconfig.declaration.json');
   if (existsSync(tsConfig)) {
     await execa('tsc', ['-p', tsConfig]);
   }
 }
-
-async function gogo() {
-  await copySourceCode()
-  await buildTypeDeclarations()
-  await buildESMOutputs()
-  await buildStyle()
-  await buildEntry()
-  await buildPacakgeEntry()
-}
-gogo()
 async function buildPacakgeEntry() {
   const libEntryFile = path.join(LIB_DIR, 'index.js');
   const styleEntryFile = path.join(LIB_DIR, `index.styl`);
   genPackageEntry({
     outputPath: esEntryFile,
-    pathResolver: (path) => `./${relative(ES_DIR, path)}`,
+    pathResolver: (path) => `./${relative(SRC_DIR, path)}`,
   })
   await copy(esEntryFile, libEntryFile)
-  await compileJs(libEntryFile)
   await genPacakgeStyle()
+  await compilerSingleCss(styleEntryFile)
+}
+async function runRunEs() {
+  process.env.MODULE_ENV = 'ES'
+  await buildESMOutputs()
+  await buildStyle()
+}
+async function runRunCJS() {
+  process.env.MODULE_ENV = 'commonjs'
+  await buildCJSOutputs()
+  await buildStyle()
+}
+async function runTask() {
+  await copySourceCode()
+  await buildPacakgeEntry()
+  await buildTypeDeclarations()
+  // 执行ES代码
+  await runRunEs()
+  await runRunCJS()
+  await buildStyleEntry()
+  const libEntryFile = path.join(LIB_DIR, 'index.js');
+  await compileJs(libEntryFile)
   execa.sync('yarn', ['build:umd'],{
     stdio: ['inherit', 'inherit', 'pipe']
   })
-  await compilerSingleCss(styleEntryFile)
 }
+runTask()
+
+
+
+
 
 
 

@@ -28,6 +28,9 @@ function pascalize(str) {
     (_, c1, c2) => c1.toUpperCase() + c2
   );
 }
+function getTargetDir(url) {
+  return  path.resolve(url || __dirname, process.env.MODULE_ENV === 'ES' ? '../es' : '../lib')
+}
 function normalizePath(path) {
   return path.replace(/\\/g, '/');
 }
@@ -52,8 +55,8 @@ const isDir = (dir) => lstatSync(dir).isDirectory(); // 是否是文件夹
 const isTestDir = (dir) => TEST_REGEXP.test(dir); // 是否是组件下面的test目录
 const isAsset = (path) => ASSET_REGEXP.test(path); // 是否是静态资源图片类型文件
 const isStyle = (path) => STYLE_REGEXP.test(path); // 是否是style样式文件
+
 module.exports = {
-  MODULE_ENV: process.env.MODULE_ENV,
   smartOutputFile,
   pascalize,
   normalizePath,
@@ -62,6 +65,7 @@ module.exports = {
   ES_DIR,
   LIB_DIR,
   SRC_DIR,
+  getTargetDir,
   isDemoDir,
   isDir,
   isTestDir,

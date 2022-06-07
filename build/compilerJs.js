@@ -1,7 +1,7 @@
 const path = require('path')
 const fs = require('fs-extra')
 const babel = require('@babel/core')
-const { MODULE_ENV ,isAsset,isStyle} = require('./common')
+const {isAsset,isStyle,getTargetDir} = require('./common')
 const babelConfig = { // babel配置
   configFile: path.join(__dirname, './babel.config.js')
 }
@@ -15,11 +15,8 @@ const isDir = dir => {
 }
 // const isCode = path => !/(demo|test|\.md)$/.test(path)
 const isScript = path => scriptRegExp.test(path)
-process.env.MODULE_ENV = 'ES'
-
-console.log(process.env.MODULE_ENV,'=====')
-const srcPath = path.resolve(__dirname, MODULE_ENV === 'ES' ? '../es' : '../lib')
 module.exports = function compilerJs(dir) {
+  const srcPath = getTargetDir()
   let files = []
   dir = /^\//.test(dir) ? dir : path.join(srcPath, dir)
   if (isDir(dir)) {

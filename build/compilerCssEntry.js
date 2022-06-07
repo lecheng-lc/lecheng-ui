@@ -2,8 +2,7 @@ const dependencyTree = require('dependency-tree')
 const path = require('path')
 const fs = require('fs-extra')
 const whiteList = ['popup']
-const { MODULE_ENV } = require('./common')
-const libPath = MODULE_ENV === 'ES' ? '../es' : '../lib'
+const {getTargetDir} = require('./common')
 const emptyStyleComponents = [
   'bem',
   'composables',
@@ -27,6 +26,7 @@ function getComponentNameFromPath(file) {
  */
 function getDependence(component) {
   const result = [component]
+  const libPath = getTargetDir()
   const components = require('./get-component')('style')
   const checkList = whiteList.concat(components)
   const directory = path.resolve(__dirname, libPath)
@@ -53,7 +53,7 @@ function getDependence(component) {
 }
 
 module.exports = function writeStyle(component) {
-  console.log(component,'===')
+  const libPath = getTargetDir()
   // 收集依赖
   const styleArr = [...new Set(getDependence(component))]
   const componentPath = path.resolve(__dirname, libPath, component, 'style/index.js')
@@ -62,7 +62,7 @@ module.exports = function writeStyle(component) {
   }
   // console.log(componentPath,'][]]')
   let expression = ''
-  if(MODULE_ENV !== 'ES') {
+  if(process.env.MODULE_ENV !== 'ES') {
     expression = styleArr.map(x =>
       `require("${component === x ? '../index.css' : `../../${x}/index.css`}")`
     ).join('\n')

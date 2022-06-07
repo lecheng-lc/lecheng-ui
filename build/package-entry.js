@@ -4,31 +4,59 @@ const {
   pascalize,
   smartOutputFile,
   normalizePath,
+  SRC_DIR
 } = require('./common')
 const skipInstall = ['bem', 'composables', 'locale', 'style', 'utils']
 const { ES_DIR, getPackageJson } = require('./common') ;
-function genImports(components, options) {
+function getPathByName(name, pathResolver) {
+  let path = join(SRC_DIR, name);
+
+  if (pathResolver) {
+      path = pathResolver(path);
+  }
+
+  return normalizePath(path);
+}
+function genImports(components, pathResolver ,namedExport = true) {
   return components
     .map(name => {
       let path = join(ES_DIR, name);
-      if (options.pathResolver) {
-        path = options.pathResolver(path);
-      }
-
-      return `import ${pascalize(name)} from '${normalizePath(path)}';`;
+      const pascalName = pascalize(name);
+      const importName = namedExport ? `{ ${pascalName} }` : pascalName;
+      const importPath = getPathByName(name, pathResolver);
+      return `import ${importName} from '${importPath}';`;
     })
     .join('\n');
 }
 
-function genExports(names) {
-  return names.map(name => `${name}`).join(',\n  ');
+function genExports(names, pathResolver, namedExport) {
+  if (namedExport) {
+      const exports = names
+          .map((name) => `export * from '${getPathByName(name, pathResolver)}';`)
+          .join('\n');
+      return `
+export default {
+  install,
+  version,
+};
+${exports}
+`;
+  }
+  return `
+export {
+  install,
+  version,
+  ${names.map(pascalize).join(',\n  ')}
+};
+`;
 }
 
-module.exports =  function genPackageEntry(options) {
+module.exports =  function genPackageEntry({ outputPath, pathResolver, }) {
   const names = packComponents.filter(item=>!skipInstall.includes(item))
   const version = process.env.PACKAGE_VERSION || getPackageJson().version;
+  const namedExport = true
   const components = names.map(pascalize);
-  const content = `${genImports(names, options)}
+  const content = `${genImports(names, pathResolver, namedExport)}
 
 const version = '${version}';
 
@@ -45,17 +73,8 @@ function install(app) {
     }
   });
 }
-export {
-  install,
-  version,
-  ${genExports(components)}
-};
-
-export default {
-  install,
-  version
-};
+${genExports(names, pathResolver, namedExport)}
 `;
 
-  smartOutputFile(options.outputPath, content);
+  smartOutputFile(outputPath, content);
 }

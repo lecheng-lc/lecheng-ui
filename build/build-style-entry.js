@@ -1,9 +1,9 @@
 const components = require('./get-component')('style')
 const writeStyle = require('./compilerCssEntry')
 
-function buildEntry() {
+function buildStyleEntry() {
   components.forEach(writeStyle)
 }
 module.exports = {
-  buildEntry
+  buildStyleEntry
 }

@@ -10,7 +10,6 @@
     "esModuleInterop": true,
     "allowSyntheticDefaultImports": true,
     "sourceMap": true,
-    
     "baseUrl": ".",
     "types": [
       "webpack-env"
@@ -43,7 +42,5 @@
   ],
   "exclude": [
     "node_modules",
-    "docs copy",
-    "docs-origin"
   ]
 }
