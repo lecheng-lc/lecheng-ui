@@ -11,7 +11,6 @@
 <script lang="ts">
 import Layout from '../../components/Layout'
 import { markdown } from '../../constant'
-console.log(markdown,'kkkk')
 import {
   defineComponent,
   getCurrentInstance,

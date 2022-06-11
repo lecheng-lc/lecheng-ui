@@ -4,6 +4,7 @@ import DynamicImport from '@@/dynamic-import/README.md'
 import Principle from '@@/principle/README.md'
 import Locale from '@@/locale/README.md'
 import FrequentlyQa from '@@/frequently-qa/README.md'
+import ScrollTab from '@@/scroll-tab/README.md'
 export interface PackageItem {
   title: string;
   name: string;
@@ -58,6 +59,16 @@ export const routerDir: PackageItemGroup[] = [
         title: '左滑删除',
         noDemo: false,
         name: 'swipe-cell',
+      },
+    ]
+  },
+  {
+    title: '滚动吸顶',
+    items: [
+      {
+        title: '滚动吸顶',
+        noDemo: false,
+        name: 'scroll-tab',
       },
     ]
   }

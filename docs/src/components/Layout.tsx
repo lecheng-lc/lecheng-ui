@@ -1,5 +1,5 @@
 import { defineComponent, reactive, ref, computed, watch, onMounted, getCurrentInstance, ComponentInternalInstance } from 'vue'
-import { use } from '@@/utils'
+import {  use } from '@@/utils'
 import NavItems from './NavItems'
 import { PackageItemGroup, PackageItem, routerDir } from '../constant'
 const [bem] = use('layout')

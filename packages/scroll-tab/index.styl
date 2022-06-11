@@ -1,0 +1,44 @@
+.multi-tab {
+  position: relative;
+  .nav0 {
+    position: absolute;
+    top: 0;
+    z-index: 99;
+    width: 100%;
+    transform: translateY(-1000%);
+    &.show {
+      transform: translateY(0%);
+    }
+    &.trans {
+      transition: transform 0.4s linear;
+    }
+  }
+}
+.body-wrapper {
+  position: relative;
+  width: 100vw;
+  height: 100vh;
+  overflow: hidden;
+}
+.slide-wrapper {
+  width: 100%;
+  overflow: hidden;
+  z-index: 0;
+  .slide-content {
+    display: flex;
+    align-items: flex-start;
+    flex-wrap: nowrap;
+    .slide-page {
+      width: 100vw;
+      overflow: hidden;
+      &.h-auto {
+        height: 'auto';
+        overflow: 'visible';
+      }
+      &.h-zero {
+        height: '0';
+        overflow: 'hidden';
+      }
+    }
+  }
+}

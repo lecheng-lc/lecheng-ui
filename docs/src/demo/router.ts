@@ -13,7 +13,7 @@ routerDir.forEach(x => {
 	  routes.push(composeRoute(item.name))
   })
 })
-console.log(routes,'====')
+console.log(routes)
 const router = createRouter({
   history: createWebHashHistory(process.env.BASE_URL),
   routes: [
