@@ -30,14 +30,7 @@ import {
   makeNumberProp,
   makeArrayProp
 } from '../utils/index';
-import BSscroll from 'better-scroll'
 const [name, bem] = createNamespace('scroll-tap')
-type SwipeCellSide = 'left' | 'right';
-type SwipeCellPosition = SwipeCellSide | 'cell' | 'outside';
-type SwipeCellExpose = {
-  open: (side: SwipeCellSide) => void;
-  close: (position: SwipeCellPosition) => void;
-}
 const tabNavProps = {
   name: makeNumericProp(''),
   value: makeNumberProp(0),
@@ -53,13 +46,12 @@ export default defineComponent({
   name,
   props: tabNavProps,
   emits: ['input', 'click'],
-  setup(props, { emit, slots }) {
+  setup(props, { emit }) {
     let bs = reactive<any>({})
-    const navWrapper = ref<any>({})
+    const navWrapper = ref<HTMLElement>()
     onMounted(() => {
       nextTick(() => {
-        console.log()
-        bs = new BScroll(navWrapper.value, {
+        bs = new BScroll(navWrapper.value!, {
           scrollX: true,
           scrollY: false,
           click: true,
@@ -70,13 +62,16 @@ export default defineComponent({
       })
     })
 
+    watch(() => props.value, ()=>{
+      animate()
+    })
     const clickNav = (idx: number) => {
       emit('click', idx)
     }
     const animate = (duration: number = 300) => {
       if (navWrapper.value) {
         const tabNavEl = navWrapper.value
-        const contentOffsetWidth = tabNavEl.querySelector('.nav-content').offsetWidth;
+        const contentOffsetWidth = (tabNavEl.querySelector('.nav-content') as HTMLElement).offsetWidth;
         const list = Array.from(tabNavEl.querySelectorAll('.item'));
         const item: any = list[props.value];
         if (!item) return;

@@ -5,7 +5,8 @@ reactive,
 defineComponent,
 onBeforeUpdate,
 getCurrentInstance,
-onMounted
+onMounted,
+type Ref
 } from 'vue'
 import ScrollTap from '../ScrollTap'
 import '../index.styl'
@@ -64,7 +65,6 @@ const mockLists = [
 ]
 export default defineComponent({
   setup(props, { emit, slots }) {
-    console.log('1234')
     const tabList = reactive<any>(mockLists)
     const tabIndex = ref<number>(0)
     let pageItemRefs: any = []
@@ -82,7 +82,7 @@ export default defineComponent({
     onBeforeUpdate(() => {
       pageItemRefs = []
     })
-    const setItemRef = (el: HTMLElement) => {
+    const setItemRef = (el: any) => {
       pageItemRefs.push(el)
     }
     onMounted(() => {

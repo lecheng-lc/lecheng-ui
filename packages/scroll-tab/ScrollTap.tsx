@@ -29,7 +29,8 @@ import {
   createNamespace, // 创建bem风格
   makeNumericProp, //  类型校验
   makeNumberProp,
-  makeArrayProp
+  makeArrayProp,
+  truthProp
 } from '../utils/index';
 import BScroll from '@better-scroll/core'
 import NestedScroll from '@better-scroll/nested-scroll';
@@ -50,14 +51,11 @@ const scrollTabProps = {
   name: makeNumericProp(''),
   value: makeNumberProp(0),
   tabList: makeArrayProp(),
-  isSticky: Boolean,
+  isSticky: truthProp,
   tidy: Boolean,
   stickyTop: makeNumberProp(0),
   stopPropagation: Boolean,
 };
-interface HandeEnd {
-  did: boolean
-}
 export type ScrollTabProps = ExtractPropTypes<typeof scrollTabProps>; // 精确的提取类型约束
 type ScrollTabInstance = ComponentPublicInstance<
   ScrollTabProps,
@@ -87,6 +85,8 @@ export default defineComponent({
         return isShowNav.value && isArrivedTop.value
       }
       if (props.isSticky) {
+        console.log(123)
+        console.log(isArrivedTop.value)
         return isArrivedTop.value
       }
       return false
@@ -130,6 +130,8 @@ export default defineComponent({
           ...n
         }
       })
+      console.log(tabs)
+      console.log('我是tabs')
     }
     const handleSlide = () => {
       if (!isArrivedTop.value || showNav.value) {
@@ -162,14 +164,16 @@ export default defineComponent({
         }
       })
       bsBody.on('touchEnd', () => {
-        // 处理slide能否侧滑，
         handleSlide()
       })
       bsBody.updateHeight = updateHeight
-      // useExpose({bsBody})
       instance!.appContext.config.globalProperties.bsBody = bsBody
     }
-    const goToPage = (startIndex: number, index: number) => { }
+    const goToPage = (startIndex: number, endIndex: number) => {
+      handleStart(startIndex);
+      bsSlide.goToPage(endIndex, 0, 300);
+      handleEnd()
+    }
     const setIndex = (index: number, isClick = true) => {
       if (index === activeIndex.value) return
       const startIndex = activeIndex.value
@@ -177,7 +181,7 @@ export default defineComponent({
       emit('input', index)
       emit('click', index);
       if (isClick) {
-        // goToPage(startIndex, index);
+        goToPage(startIndex, index);
       }
     }
     const cache = (() => {
@@ -207,15 +211,13 @@ export default defineComponent({
       // 此时activeIndex已指向目的页面
       if (handleEnd.did) return
       handleEnd.did = true
-      console.log(navWrapper)
-      console.log('2222')
       updateHeight() // 更新高度
       const pages = Array.from(slideContent.value!.children);
       if (isArrivedTop.value) {
         const scrollTop = Math.round(ST.value - tabs[activeIndex.value as number]._marginTop); // 应该滚动的距离
+        console.log(scrollTop, 'scrollTop','ST.value',ST.value,'tabs[activeIndex.value as number]._marginTop',tabs[activeIndex.value as number]._marginTop)
         const minScrollTop =
           cache('slideOT', getSlideOffsetTop.bind(this)) - navWrapper.value!.offsetHeight - props.stickyTop; // 这个值一直都会是150
-
         tabs.forEach((item, idx) => {
           let className = 'h-zero';
           if (activeIndex.value !== idx) {
@@ -254,8 +256,6 @@ export default defineComponent({
       }
     }
     const handleStart = (startIndex = activeIndex.value) => {
-      console.log(navWrapper)
-      console.log('333')
       handleEnd.did = false;
       ST.value = Math.abs(bsBody.y) // 滚动的高度
       const slideOffsetTop =
@@ -268,12 +268,11 @@ export default defineComponent({
         if (isArrivedTop.value) {
           // 吸顶, 处理其他page
           if (startIndex !== idx) {
-            const ST = item._scrollTop || 0;
-            if (ST > 0) {
+            const innerST = item._scrollTop || 0;
+            if (innerST > 0) {
               // 有记录,这时候算出的值为一个负值，比如当前页面translateY = 100px 那不再当前下标的值就位当前
               item._marginTop = ST.value - item._scrollTop
             } else {
-
               item._marginTop = ST.value - slideOffsetTop;
             }
           }
@@ -326,7 +325,7 @@ export default defineComponent({
         <div class="multi-tab">
           {
             props.isSticky ?
-              <div class={`nav0 ${showNav ?? 'show'} ${(isArrivedTop && props.tidy) ?? 'trans'}`} >
+              <div class={`nav0 ${showNav.value ? 'show' : ''} ${(isArrivedTop.value && props.tidy) ? 'trans' : ''}`} >
                 {
                   slots['nav'] ?
                     slots['nav']() :

@@ -17,10 +17,9 @@ import mock from './mock'
 import { defineComponent} from 'vue'
 export default defineComponent({
   components: {},
-  props: {},
   data() {
     return {
-      list: [],
+      list: <any[]>[],
       isStop: false,
       isLoading: true,
     }
@@ -34,10 +33,8 @@ export default defineComponent({
       this.isStop = false
     },
     init() {
-      this.loadList()
-      console.log(this)
-      console.log('-----')
-      this.bsBody.on('pullingUp', () => {
+      this.loadList();
+      (this as any).bsBody.on('pullingUp', () => {
         if (this.isStop) return
         this.loadList()
       })
@@ -45,11 +42,11 @@ export default defineComponent({
     loadList() {
       this.isLoading = true
       setTimeout(() => {
-        this.list.push(...mock)
-        this.isLoading = false
-        this.bsBody.finishPullUp()
+        this.list.push(...mock);
+        this.isLoading = false;
+        (this as any).bsBody.finishPullUp()
         this.$nextTick(() => {
-          this.bsBody.updateHeight()
+          (this as any).bsBody.updateHeight()
         })
       }, 1000)
     },
