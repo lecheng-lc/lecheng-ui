@@ -1,6 +1,5 @@
 import {
   ref,
-  Ref,
   reactive,
   watch,
   computed,
@@ -14,18 +13,7 @@ import {
   type ComponentPublicInstance
 } from 'vue'
 import TabNav from './TabNav';
-// import { useTouch } from '../composables/index.ts'
-// import { useTouch,useRect, useExpose, useClickAway } from '../composables/index'
-import { useExpose } from '../composables/use-expose'; // 挂在方法到vue getCurrentInstance().proxy上去
-import { useClickAway } from '../composables/use-click-awway';
-import { useRect } from '../composables/use-rect';
 import {
-  clamp,
-  isDef,
-  numericProp, // [number,string]
-  Interceptor,  // 事件拦截器type
-  preventDefault, // 阻止默认事件
-  callInterceptor, // 事件拦截器
   createNamespace, // 创建bem风格
   makeNumericProp, //  类型校验
   makeNumberProp,
@@ -57,10 +45,6 @@ const scrollTabProps = {
   stopPropagation: Boolean,
 };
 export type ScrollTabProps = ExtractPropTypes<typeof scrollTabProps>; // 精确的提取类型约束
-type ScrollTabInstance = ComponentPublicInstance<
-  ScrollTabProps,
-  SwipeCellExpose
->
 export default defineComponent({
   name,
   props: scrollTabProps,
@@ -85,7 +69,6 @@ export default defineComponent({
         return isShowNav.value && isArrivedTop.value
       }
       if (props.isSticky) {
-        console.log(123)
         console.log(isArrivedTop.value)
         return isArrivedTop.value
       }
@@ -107,7 +90,6 @@ export default defineComponent({
     }
     const handleNav = () => {
       const y = bsBody.movingDirectionY;
-      console.log(y);
       if (y === 1) {
         // 手指上滑
         isShowNav.value = false;
@@ -119,9 +101,9 @@ export default defineComponent({
     watch(activeIndex, () => {
       updateHeight()
     })
-    // watch(bsSlide.enable, (newVal, oldVal) => {
-    //   console.log('bsSlide.enabled', newVal, oldVal);
-    // })
+    watch(bsSlide.enable, (newVal, oldVal) => {
+      console.log('bsSlide.enabled', newVal, oldVal);
+    })
     if (props.tabList.length > 0) {
       activeIndex.value = props.value
       tabs = props.tabList.map((n: any) => {
@@ -222,7 +204,6 @@ export default defineComponent({
           let className = 'h-zero';
           if (activeIndex.value !== idx) {
             const ST = item._scrollTop || 0;
-            // console.log(item._marginTop, idx, '[[[[')
             if (ST > 0) {
               // 有记录  当前页面值 - 之前页面的滚动记录值（item._scrollTop一定是正值）
               console.log(idx, ST, scrollTop, item._marginTop, '888')

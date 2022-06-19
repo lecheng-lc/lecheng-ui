@@ -16,7 +16,6 @@
 import mock from './mock'
 import { defineComponent} from 'vue'
 export default defineComponent({
-  components: {},
   data() {
     return {
       list: <any[]>[],
@@ -26,15 +25,19 @@ export default defineComponent({
   },
 
   methods: {
-    stop() {
+    stop(index:any) {
       this.isStop = true
+      console.log(index,'stop')
     },
     recover() {
       this.isStop = false
+      console.log(2345)
     },
     init() {
       this.loadList();
       (this as any).bsBody.on('pullingUp', () => {
+        console.log('wtm', this.isStop)
+        console.log(this)
         if (this.isStop) return
         this.loadList()
       })

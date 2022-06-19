@@ -80,5 +80,6 @@ export const markdown = {
   DynamicImport,
   Principle,
   FrequentlyQa,
-  Locale
+  Locale,
+  ScrollTab
 }

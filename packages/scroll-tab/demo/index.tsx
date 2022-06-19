@@ -64,7 +64,7 @@ const mockLists = [
   },
 ]
 export default defineComponent({
-  setup(props, { emit, slots }) {
+  setup() {
     const tabList = reactive<any>(mockLists)
     const tabIndex = ref<number>(0)
     let pageItemRefs: any = []
@@ -75,7 +75,7 @@ export default defineComponent({
       pageItemRefs[index].recover();
       tabList.forEach((item: any, idx: number) => {
         if (tabIndex.value !== idx && pageItemRefs) {
-          pageItemRefs[index].stop();
+          pageItemRefs[idx].stop(idx);
         }
       })
     }

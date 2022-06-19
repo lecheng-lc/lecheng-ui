@@ -1,12 +1,5 @@
 多tab滚动容器，基于better-scroll实现，支持位置保持，侧滑切tab，tab自动吸顶等功能。
-## 在线演示
-![image.png](https://p3-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/43f927fac88e40baa10b6f34086245ca~tplv-k3u1fbpfcp-watermark.image?)<br/>
-[http://39.98.139.162:3001/demo](http://39.98.139.162:3001/demo)
-## 本地运行
-1. git clone
-2. yarn install
-3. yarn dev
-4. 0.0.0.0:8000
+
 
 ## 说明
 基于better-scroll实现。
@@ -35,9 +28,6 @@ export default {
   }
 }
 ```
-
-## 参考demo
-[src/library/components/multiTab/demo](https://github.com/lizhuang93/multi-tab/blob/master/src/library/components/multiTab/demo/index.vue)
 
 ## Attributes
 
@@ -70,6 +60,6 @@ Vue.prototype.bsBody = this.bsBody;
 
 
 ## 参考
-[https://juejin.cn/post/7008356543444254757](https://juejin.cn/post/7008356543444254757)
+[https://juejin.cn/post/7008356543444254757](https://juejin.cn/post/7008356543444254757)  
 [https://market.m.taobao.com/app/idleFish-F2e/mini-3c/home.html](https://market.m.taobao.com/app/idleFish-F2e/mini-3c/home.html)
 
