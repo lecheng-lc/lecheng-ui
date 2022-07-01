@@ -5,6 +5,7 @@ import Principle from '@@/principle/README.md'
 import Locale from '@@/locale/README.md'
 import FrequentlyQa from '@@/frequently-qa/README.md'
 import ScrollTab from '@@/scroll-tab/README.md'
+import LineClamp from '@@/line-clamp/README.md'
 export interface PackageItem {
   title: string;
   name: string;
@@ -71,6 +72,16 @@ export const routerDir: PackageItemGroup[] = [
         name: 'scroll-tab',
       },
     ]
+  },
+  {
+    title: '文字打点',
+    items: [
+      {
+        title: '文字打点',
+        noDemo: false,
+        name: 'line-clamp',
+      },
+    ]
   }
 ]
 
@@ -81,5 +92,6 @@ export const markdown = {
   Principle,
   FrequentlyQa,
   Locale,
-  ScrollTab
+  ScrollTab,
+  LineClamp
 }
