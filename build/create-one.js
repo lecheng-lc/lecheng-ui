@@ -20,7 +20,7 @@ const upCase = (str) => {
 // README.md
 // demo/index.vue
 const fnName = upCase(camelCase(name))
-const tsxContent = `import { defineComponent, computed, watch, onMounted } from '@vue/composition-api'
+const tsxContent = `import { defineComponent, computed, watch, onMounted } from 'vue'
 import { vw, isDef } from '../utils'
 import useBem from '../bem'
 

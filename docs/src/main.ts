@@ -8,12 +8,13 @@ import  '@vant/touch-emulator'
 // 其他元素使用 github 的样式
 import 'github-markdown-css'
 import './assets/markdown.css'
+import 'vue'
 const app = createApp(App)
 import { Router, RouteLocationNormalizedLoaded } from 'vue-router'
 declare module '@vue/runtime-core' {
   interface ComponentCustomProperties {
-    $route: RouteLocationNormalizedLoaded
-    $router: Router
+    $route: RouteLocationNormalizedLoaded;
+    $router: Router;
   }
 }
 app.config.globalProperties.$router = router

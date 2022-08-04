@@ -16,6 +16,10 @@ module.exports = {
       chunks: ['chunk-vendors', 'chunk-common', 'demo']
     }
   },
+  devServer:{
+    port:3030,
+    disableHostCheck: true
+  },
   chainWebpack: (config) => {
     config
       .resolve.alias
