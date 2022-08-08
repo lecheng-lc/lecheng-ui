@@ -1,4 +1,4 @@
-section {
+.markdown-body {
     color: #333;
     font-size: 16px;
     overflow-x: auto;
@@ -6,7 +6,7 @@ section {
     -webkit-font-smoothing: antialiased;
     font-family: PingFang SC, Helvetica Neue, Arial, sans-serif;
 }
-section,
+.markdown-body,
 p {
     margin: 0;
 }
@@ -112,7 +112,7 @@ code.language-css:after {
 .hljs-doctag,
 .hljs-keyword,
 .hljs-name,
-.hljs-section,
+.hljs-.markdown-body,
 .hljs-selector-class,
 .hljs-selector-id,
 .hljs-selector-tag,
@@ -139,7 +139,7 @@ code.language-css:after {
 .van-doc-content a {
     color: #0079f3;
 }
-.van-doc-content section {
+.van-doc-content .markdown-body {
     padding: 13px 40px;
     overflow: hidden;
 }
@@ -157,36 +157,36 @@ code.language-css:after {
 .van-doc-content  h1 {
     font-size: 36px;
 }
-.van-doc-content section  h2 {
+.van-doc-content .markdown-body  h2 {
     font-size: 30px;
     margin-bottom: 25px;
 }
-.van-doc-content section  h3 {
+.van-doc-content .markdown-body  h3 {
     font-size: 22px;
     margin-top: 45px;
 }
-.van-doc-content section  h2 + h3 {
+.van-doc-content .markdown-body  h2 + h3 {
     margin-top: 25px;
 }
-.van-doc-content section  h4 {
+.van-doc-content .markdown-body  h4 {
     font-size: 16px;
     margin-bottom: 15px;
 }
-.van-doc-content section  h5 {
+.van-doc-content .markdown-body  h5 {
     font-size: 14px;
 }
-.van-doc-content section  h6 {
+.van-doc-content .markdown-body  h6 {
     font-size: 14px;
     color: #666;
 }
-.van-doc-content section  p {
+.van-doc-content .markdown-body  p {
     margin: 15px 0;
     font-size: 14px;
     line-height: 26px;
     color: #34495e;
 }
-.van-doc-content section  ol li,
-.van-doc-content section  ul li {
+.van-doc-content .markdown-body  ol li,
+.van-doc-content .markdown-body  ul li {
     color: #34495e;
     font-size: 14px;
     line-height: 22px;
@@ -194,8 +194,8 @@ code.language-css:after {
     padding-left: 15px;
     position: relative;
 }
-.van-doc-content section > ol li:before,
-.van-doc-content section > ul li:before {
+.van-doc-content .markdown-body > ol li:before,
+.van-doc-content .markdown-body > ul li:before {
     content: "";
     position: absolute;
     top: 0;
@@ -208,17 +208,17 @@ code.language-css:after {
     box-sizing: border-box;
     border: 1px solid #666;
 }
-.van-doc-content section > ol li li,
-.van-doc-content section > ul li li {
+.van-doc-content .markdown-body > ol li li,
+.van-doc-content .markdown-body > ul li li {
     margin-left: 0;
 }
-.van-doc-content section > hr {
+.van-doc-content .markdown-body > hr {
     border: 0 none;
     border-top: 1px solid #eee;
 }
-.van-doc-content section li > code,
-.van-doc-content section p > code,
-.van-doc-content section table code {
+.van-doc-content .markdown-body li > code,
+.van-doc-content .markdown-body p > code,
+.van-doc-content .markdown-body table code {
     margin: 2px;
     padding: 2px 7px;
     display: inline;
@@ -264,23 +264,23 @@ code.language-css:after {
     font-size: 16px;
     font-weight: 500;
 }
-.van-doc-content--changelog section {
+.van-doc-content--changelog .markdown-body {
     padding-bottom: 30px;
 }
-.van-doc-content--changelog section > h2 {
+.van-doc-content--changelog .markdown-body > h2 {
     margin-top: 50px;
     margin-bottom: 10px;
 }
-.van-doc-content--changelog section > h2 + p,
-.van-doc-content--changelog section > h2 + p code {
+.van-doc-content--changelog .markdown-body > h2 + p,
+.van-doc-content--changelog .markdown-body > h2 + p code {
     margin: 0;
 }
-.van-doc-content--changelog section > h2 a {
+.van-doc-content--changelog .markdown-body > h2 a {
     color: inherit;
     font-size: 24px;
     -webkit-font-smoothing: auto;
 }
-.van-doc-content--changelog section > h2:first-child,
-.van-doc-content--changelog section > h2:nth-child(2) {
+.van-doc-content--changelog .markdown-body > h2:first-child,
+.van-doc-content--changelog .markdown-body > h2:nth-child(2) {
     margin-top: 20px;
 }

@@ -1,4 +1,5 @@
-@import '~@@/style/var.styl'
+@import '../../../../packages/style/var.styl'
+// @import '@@/style/var.styl'
 .lc-nav
   &__group
     &--title
