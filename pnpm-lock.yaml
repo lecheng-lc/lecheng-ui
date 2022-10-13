@@ -2,7 +2,9 @@ lockfileVersion: 5.3
 
 specifiers:
   '@babel/core': ^7.18.10
+  '@babel/helper-module-imports': ^7.18.6
   '@babel/plugin-proposal-private-property-in-object': ^7.16.7
+  '@babel/preset-env': ^7.18.10
   '@better-scroll/core': ^2.4.2
   '@better-scroll/nested-scroll': ^2.4.2
   '@better-scroll/pull-up': ^2.4.2
@@ -16,6 +18,7 @@ specifiers:
   '@vitejs/plugin-legacy': ^2.0.0
   '@vitejs/plugin-vue': ^3.0.1
   '@vitejs/plugin-vue-jsx': ^2.0.0
+  '@vue/babel-plugin-jsx': ^1.1.1
   '@vue/cli-plugin-babel': ~4.5.0
   '@vue/cli-plugin-eslint': ~4.5.0
   '@vue/cli-plugin-router': ~4.5.0
@@ -27,6 +30,7 @@ specifiers:
   '@vue/runtime-core': ^3.2.37
   babel-preset-vca-jsx: ^0.3.6
   better-scroll: ^2.4.2
+  clean-css: ^5.3.1
   core-js: ^3.6.5
   dependency-tree: ^8.1.2
   esbuild: ^0.14.42
@@ -35,6 +39,7 @@ specifiers:
   eslint-plugin-vue: ^7.0.0-0
   execa: 5.1.1
   fp-ts: ^2.12.2
+  fs-extra: ^10.1.0
   github-markdown-css: ^4.0.0
   happy-dom: ^6.0.4
   highlight.js: ^10.1.1
@@ -75,7 +80,9 @@ dependencies:
 
 devDependencies:
   '@babel/core': 7.18.10
+  '@babel/helper-module-imports': 7.18.6
   '@babel/plugin-proposal-private-property-in-object': 7.18.6_@babel+core@7.18.10
+  '@babel/preset-env': 7.18.10_@babel+core@7.18.10
   '@rollup/plugin-dynamic-import-vars': 1.4.4_rollup@2.77.2
   '@rollup/pluginutils': 4.2.1
   '@typescript-eslint/eslint-plugin': 2.34.0_3c5488f8ea403c4a0450f16085844478
@@ -84,6 +91,7 @@ devDependencies:
   '@vant/touch-emulator': 1.3.2
   '@vitejs/plugin-legacy': 2.0.0_terser@5.14.2+vite@3.0.4
   '@vitejs/plugin-vue-jsx': 2.0.0_vite@3.0.4+vue@3.2.37
+  '@vue/babel-plugin-jsx': 1.1.1_@babel+core@7.18.10
   '@vue/cli-plugin-babel': 4.5.19_8df694db2c38340b10b2b6edb9918c6c
   '@vue/cli-plugin-eslint': 4.5.19_8dae0699d6efd2238c738ba66a037f55
   '@vue/cli-plugin-router': 4.5.19_@vue+cli-service@4.5.19
@@ -93,6 +101,7 @@ devDependencies:
   '@vue/compiler-sfc': 3.2.37
   '@vue/eslint-config-typescript': 5.1.0_19492cae973aa20eb3dd52cb4ac1445f
   babel-preset-vca-jsx: 0.3.6_@babel+core@7.18.10
+  clean-css: 5.3.1
   core-js: 3.24.1
   dependency-tree: 8.1.2
   esbuild: 0.14.53
@@ -101,6 +110,7 @@ devDependencies:
   eslint-plugin-vue: 7.20.0_eslint@6.8.0
   execa: 5.1.1
   fp-ts: 2.12.2
+  fs-extra: 10.1.0
   github-markdown-css: 4.0.0
   happy-dom: 6.0.4
   highlight.js: 10.7.3
@@ -4038,6 +4048,13 @@ packages:
       source-map: 0.6.1
     dev: true
 
+  /clean-css/5.3.1:
+    resolution: {integrity: sha512-lCr8OHhiWCTw4v8POJovCoh4T7I9U11yVsPjMWWnnMmp9ZowCxyad1Pathle/9HjaDp+fdQKjO9fQydE6RHTZg==}
+    engines: {node: '>= 10.0'}
+    dependencies:
+      source-map: 0.6.1
+    dev: true
+
   /clean-stack/2.2.0:
     resolution: {integrity: sha512-4diC9HaTE+KRAMWhDhrGOECgWZxoevMc5TlkObMqNSsVU62PYzXZ/SMTjzyGAFF1YusgxGcSWTEXBhp0CPwQ1A==}
     engines: {node: '>=6'}
@@ -6400,6 +6417,15 @@ packages:
       js-yaml: 3.14.1
     dev: true
 
+  /fs-extra/10.1.0:
+    resolution: {integrity: sha512-oRXApq54ETRj4eMiFzGnHWGy+zo5raudjuxN0b8H7s/RU2oW0Wvsx9O0ACRN/kRq9E8Vu/ReskGB5o3ji+FzHQ==}
+    engines: {node: '>=12'}
+    dependencies:
+      graceful-fs: 4.2.10
+      jsonfile: 6.1.0
+      universalify: 2.0.0
+    dev: true
+
   /fs-extra/7.0.1:
     resolution: {integrity: sha512-YJDaCJZEnBmcbw13fvdAM9AwNOJwOzrE4pqMqBq5nFiEqXUqHwlK4B+3pUw6JNvfSPtX05xFHtYy/1ni01eGCw==}
     engines: {node: '>=6 <7 || >=8'}
@@ -7890,7 +7916,6 @@ packages:
     optionalDependencies:
       graceful-fs: 4.2.10
     dev: true
-    optional: true
 
   /jsprim/1.4.2:
     resolution: {integrity: sha512-P2bSOMAc/ciLz6DzgjVlGJP9+BrJWu5UDGK70C2iweC5QBIeFf0ZXRvGjEj2uYgrY2MkAAhsSWHDWlFtEroZWw==}
@@ -11916,7 +11941,6 @@ packages:
     resolution: {integrity: sha512-hAZsKq7Yy11Zu1DE0OzWjw7nnLZmJZYTDZZyEFHZdUhV8FkH5MCfoU1XMaxXovpyW5nq5scPqq0ZDP9Zyl04oQ==}
     engines: {node: '>= 10.0.0'}
     dev: true
-    optional: true
 
   /unpipe/1.0.0:
     resolution: {integrity: sha512-pjy2bYhSsufwWlKwPc+l3cN7+wuJlK6uz0YdJEOlQDbl6jo/YlPi4mb8agUkVC8BF7V8NuzeyPNqRksA3hztKQ==}

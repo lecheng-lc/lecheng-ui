@@ -4,9 +4,7 @@ import Components from 'unplugin-vue-components/vite'
 import path from 'path'
 import vitePluginMd from 'vite-plugin-md';
 import vueJsx from '@vitejs/plugin-vue-jsx'
-// import dynamicImportVars from '@rollup/plugin-dynamic-import-vars'
 import hljs from 'highlight.js';
-const  createRequire  = require('module')
 // import type MarkdownIt from 'markdown-it'
 
 // add target="_blank" to all links
@@ -83,25 +81,24 @@ export default defineConfig({
      ]
     }),
     vitePluginMd({
-      // wrapperClasses: 'van-doc-markdown-body',
+      wrapperClasses: 'van-doc-markdown-body',
       // transforms: {
       //   after: markdownCardWrapper,
       // },
-      // markdownItOptions: {
-      //   typographer: false, // https://markdown-it.github.io/markdown-it/#MarkdownIt
-      //   highlight: markdownHighlight,
-      // },
-      // markdownItSetup(md: any) {
-      //   const require = createRequire(import.meta.url);
-      //   console.log(import.meta.url,'=====')
-      //   const { slugify } = require('transliteration')
-      //   const markdownItAnchor = require('markdown-it-anchor');
-      //   markdownLinkOpen(md);
-      //   md.use(markdownItAnchor, {
-      //     level: 2,
-      //     // slugify,
-      //   });
-      // },
+      markdownItOptions: {
+        typographer: false, // https://markdown-it.github.io/markdown-it/#MarkdownIt
+        highlight: markdownHighlight,
+      },
+      markdownItSetup(md: any) {
+        // const require = createRequire(import.meta.url);
+        const { slugify } = require('transliteration')
+        // const markdownItAnchor = require('markdown-it-anchor');
+        markdownLinkOpen(md);
+        // md.use(markdownItAnchor, {
+        //   level: 2,
+        //   // slugify,
+        // });
+      },
     }),
     vueJsx({}),
 
